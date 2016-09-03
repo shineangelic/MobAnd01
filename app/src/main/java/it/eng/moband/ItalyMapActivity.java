@@ -2,10 +2,8 @@ package it.eng.moband;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.icu.text.DecimalFormat;
-import android.icu.text.DecimalFormatSymbols;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,7 +13,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-
 import it.eng.moband.db.CptContract;
 import it.eng.moband.db.CptHelperClass;
 
@@ -24,7 +21,6 @@ public class ItalyMapActivity extends FragmentActivity implements OnMapReadyCall
     private GoogleMap mMap;
     private CptHelperClass cptDatabaseH;
     private SQLiteDatabase db;
-
 
 
     @Override
@@ -63,17 +59,36 @@ public class ItalyMapActivity extends FragmentActivity implements OnMapReadyCall
         Cursor testCur = cptDatabaseH.getAll(db);
 
         testCur.moveToFirst();
-        while (!testCur.isLast()){
-            LatLng equak = new LatLng(Float.parseFloat(testCur.getString( testCur.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE)).replace(",",".") ),
-                    Float.parseFloat(testCur.getString(testCur.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LONGITUDE)).replace(",","."))) ;
-            mMap.addMarker(new MarkerOptions().position(equak).title(testCur.getString( testCur.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA) )));
+        while (!testCur.isLast()) {
+            LatLng equak = new LatLng(Float.parseFloat(testCur.getString(testCur.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE)).replace(",", ".")),
+                    Float.parseFloat(testCur.getString(testCur.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LONGITUDE)).replace(",", ".")));
+            mMap.addMarker(new MarkerOptions()
+                    .position(equak)
+                    .alpha(calculateAlpha(testCur.getString(testCur.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_YEAR))))
+                    .title(testCur.getString(testCur.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA)) +
+                             "\nAnno "+testCur.getString(testCur.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_YEAR)) + "-" +
+                            " MwDef:" + testCur.getString(testCur.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_DEF)))
+                    );
             Log.i("MOBAND",
-                    testCur.getString( testCur.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_YEAR) ) +"-"+
-                            testCur.getString( testCur.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA) )+
-                            " MwDef:"+ testCur.getString( testCur.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_DEF) )
+                    testCur.getString(testCur.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_YEAR)) + "-" +
+                            testCur.getString(testCur.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA)) +
+                            " Alpha:" + calculateAlpha(testCur.getString(testCur.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_YEAR))) +
+                            " MwDef:" + testCur.getString(testCur.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_DEF))
             );
             testCur.moveToNext();
         }
 
+    }
+
+    /**
+     * x - min                                  max - min
+     * f(x) = ---------   ===>   f(min) = 0;  f(max) =  --------- = 1
+     * max - min                                 max - min
+     *
+     * @return
+     */
+    public float calculateAlpha(String year) {
+
+        return Float.valueOf(Integer.valueOf(year) - 1065) / (2014 - 1065);
     }
 }
