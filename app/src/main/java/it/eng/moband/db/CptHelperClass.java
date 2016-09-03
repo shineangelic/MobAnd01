@@ -35,38 +35,6 @@ public class CptHelperClass extends SQLiteOpenHelper {
         this.dbPath = "/data/data/" + myContext.getPackageName() + "/databases/" + DB_NAME;
     }
 
-    public Cursor getAll(SQLiteDatabase db) {
-
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = {
-                CptContract.CatalogoParametricoTerremoti._ID,
-                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA,
-                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_YEAR,
-                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_DEF,
-                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE,
-                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LONGITUDE
-        };
-
-        // Filter results WHERE "title" = 'My Title'
-        String selection = CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_DEF +" IS NOT NULL ";
-        String[] selectionArgs = {"IS NOT NULL"};
-
-        // How you want the results sorted in the resulting Cursor
-        String sortOrder =
-                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_DEF + " DESC";
-
-        return db.query(
-                CptContract.CatalogoParametricoTerremoti.TABLE_NAME,  // The table to query
-                projection,                               // The columns to return
-                selection,                                // The columns for the WHERE clause
-                null,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                sortOrder                                 // The sort order
-        );
-    }
-
     public long getTotalRecords(SQLiteDatabase db) {
         //contatutto
         long pip = DatabaseUtils.queryNumEntries(db, CptContract.CatalogoParametricoTerremoti.TABLE_NAME, null, null);
