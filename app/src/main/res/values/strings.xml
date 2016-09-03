@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MobAnd</string>
+
+    <string name="navigation_drawer_open">Apri drawer</string>
+    <string name="navigation_drawer_close">Chiudi drawer</string>
+
+    <string name="action_settings">Impostazioni</string>
+    <string name="title_activity_italy_map">Mappa</string>
+    <string name="title_activity_slide_show">SlideShowActivity</string>
+</resources>
