@@ -10,6 +10,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+/**
+ * Activity template, creato da Android Studio
+ */
 public class ItalyMapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -29,7 +32,7 @@ public class ItalyMapActivity extends FragmentActivity implements OnMapReadyCall
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
      * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
+     * we just add a marker near Rome, Italy.
      * If Google Play services is not installed on the device, the user will be prompted to install
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
@@ -38,10 +41,6 @@ public class ItalyMapActivity extends FragmentActivity implements OnMapReadyCall
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng roma = new LatLng(41.891, 12.511);
-        mMap.addMarker(new MarkerOptions().position(roma).title("Roma"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(roma));
-        mMap.setMinZoomPreference(5);
+        // Esercizio: aggiungere un marker alla mappa
     }
 }

@@ -1,11 +1,9 @@
 package it.eng.moband;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,9 +17,11 @@ import android.widget.TextView;
 
 import java.io.IOException;
 
-import it.eng.moband.db.CptContract;
 import it.eng.moband.db.CptHelperClass;
 
+/**
+ * Launcher dell'app, Activity che parte con l'avvio della app
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -43,8 +43,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                Intent mostraMappa = new Intent(getApplicationContext(), ItalyMapActivity.class);
-                startActivity(mostraMappa);
+                startMapActivity();
             }
         });
 
@@ -69,6 +68,11 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    private void startMapActivity() {
+        Intent mostraMappa = new Intent(getApplicationContext(), ItalyMapActivity.class);
+        startActivity(mostraMappa);
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -76,15 +80,8 @@ public class MainActivity extends AppCompatActivity
 
         //ottieni DB copiato
         db = cptDatabaseH.getWritableDatabase();
-
         drawer.setText("Dimensioni DB: "+ cptDatabaseH.getTotalRecords(db));
-
-
-
-
     }
-
-
 
 
     @Override
@@ -127,8 +124,8 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
+        } else if (id == R.id.map_view) {
+            startMapActivity();
         } else if (id == R.id.nav_slideshow) {
             Intent mostraSlides = new Intent(getApplicationContext(), SlidesActivity.class);
             startActivity(mostraSlides);

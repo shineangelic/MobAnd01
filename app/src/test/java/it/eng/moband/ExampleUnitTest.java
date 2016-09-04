@@ -28,6 +28,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class ExampleUnitTest {
+
     @Mock
     Context mMockContext;
     @Mock
@@ -39,12 +40,10 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void dbTestNoCopy() throws Exception {
-
+    public void dbTestConstructorOnly() throws Exception {
 
         CptHelperClass dbHelper = new CptHelperClass(mMockContext);
 
-        SQLiteDatabase openDb = dbHelper.getReadableDatabase();
     }
 
 }

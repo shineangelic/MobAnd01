@@ -26,8 +26,8 @@ public class SlidesActivity extends AppCompatActivity {
 
         CardView wid1 = (CardView) findViewById(R.id.card_view1);
 
-        //Mostrare le slides contenute in https://drive.google.com/open?id=0B-pzmp8AqC8JV3ZJanl3dzQyOWc
-        // con una breve descrizione allàinterno di CardViews
+        //Esercizio: Mostrare le slides contenute in https://drive.google.com/open?id=0B-pzmp8AqC8JV3ZJanl3dzQyOWc
+        // con una breve descrizione all'interno di CardViews
 
     }
 
