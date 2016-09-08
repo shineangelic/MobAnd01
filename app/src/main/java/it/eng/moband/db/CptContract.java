@@ -20,7 +20,7 @@ public class CptContract {
         private CptContract() {}
 
         /* Inner class that defines the table contents */
-        public static class CatalogoParametricoTerremoti implements BaseColumns {
+        public static class CatalogoParametricoTerremoti {
             public static final String TABLE_NAME = "cpt15BIS";
             public static final String COLUMN_NAME_SECT = "Sect";
             public static final String COLUMN_NAME_REFNAME = "MainRef";
@@ -34,6 +34,7 @@ public class CptContract {
             public static final String COLUMN_NAME_INTENSITY_MAX = "Imax";
             public static final String COLUMN_NAME_LATITUDE = "LatDef";
             public static final String COLUMN_NAME_LONGITUDE = "LonDef";
+            public static final String COLUMN_NAME_INTENSITY = "MwM";
         }
 
 }

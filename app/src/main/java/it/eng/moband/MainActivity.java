@@ -1,6 +1,8 @@
 package it.eng.moband;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,10 +15,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.IOException;
 
+import it.eng.moband.ListDetail.DetailRecordActivity;
 import it.eng.moband.db.CptHelperClass;
 
 /**
@@ -27,6 +32,7 @@ public class MainActivity extends AppCompatActivity
 
     private SQLiteDatabase db;
     private CptHelperClass cptDatabaseH;
+    private static final String ITEM_ID = "ITEM_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +87,21 @@ public class MainActivity extends AppCompatActivity
         //ottieni DB copiato
         db = cptDatabaseH.getWritableDatabase();
         drawer.setText("Dimensioni DB: "+ cptDatabaseH.getTotalRecords(db));
+
+        ListView lista = (ListView) findViewById(R.id.listView);
+        Cursor c = cptDatabaseH.getRecordsForList(db);
+
+        lista.setAdapter(new MyCursorAdaper(MainActivity.this, c));
+
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(MainActivity.this, DetailRecordActivity.class);
+                i.putExtra(ITEM_ID, id);
+                startActivity(i);
+            }
+        });
+
     }
 
 
