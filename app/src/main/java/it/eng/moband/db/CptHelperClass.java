@@ -42,6 +42,61 @@ public class CptHelperClass extends SQLiteOpenHelper {
         return pip;
     }
 
+    public Cursor getRecords(SQLiteDatabase db) {
+        //contatutto
+        String[] columns = new String[]{"_id",
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_SECT,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_REFNAME,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_YEAR,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_MONTH,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_DAY,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_MINUTE,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_DEF,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_MAX,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LONGITUDE,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY
+        };
+
+        Cursor data = db.query(true, CptContract.CatalogoParametricoTerremoti.TABLE_NAME, columns, null, null, null, null, CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA, null);
+
+       /* data.moveToFirst();
+        for (int i=0; i<data.getCount(); i++) {
+            Log.i("MOBAND", "Epicentro:" + data.getString(6) + ", Magnitudo Max: " + data.getString(8));
+            data.moveToNext();
+        }*/
+        return data;
+    }
+
+    public Cursor getRecordsForList(SQLiteDatabase db) {
+        //contatutto
+        String[] columns = new String[]{"_id",
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY
+        };
+
+        Cursor data = db.query(
+                CptContract.CatalogoParametricoTerremoti.TABLE_NAME,
+                columns,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY + " IS NOT NULL AND " +
+                        CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY + " != '' AND " +
+                        CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE + " IS NOT NULL AND "+
+                        CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE + " != '' " ,
+                null,
+                null,
+                null,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA,
+                null);
+
+       /* data.moveToFirst();
+        for (int i=0; i<data.getCount(); i++) {
+            Log.i("MOBAND", "Epicentro:" + data.getString(6) + ", Magnitudo Max: " + data.getString(8));
+            data.moveToNext();
+        }*/
+        return data;
+    }
+
     /**
      * Creates a empty database on the system and rewrites it with your own database.
      */
