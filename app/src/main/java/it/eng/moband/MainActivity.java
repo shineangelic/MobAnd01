@@ -1,6 +1,5 @@
 package it.eng.moband;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,13 +20,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.io.IOException;
 
-import it.eng.moband.ListDetail.DetailRecordActivity;
-import it.eng.moband.db.CptContract;
+import it.eng.moband.listdetail.DetailRecordActivity;
 import it.eng.moband.db.CptHelperClass;
 import it.eng.moband.db.QueryHelperClass;
 
@@ -99,7 +96,7 @@ public class MainActivity extends AppCompatActivity
         // Called when the action mode is created; startActionMode() was called
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            // Inflate a menu resource providing context menu items
+            //TODO l'inflate dovrebbe avvenire in basso, appena sopra i bottoni "fisici"
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.main_contextual_menu, menu);
             return true;
