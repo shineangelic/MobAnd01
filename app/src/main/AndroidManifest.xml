@@ -41,7 +41,7 @@
 
         <activity
             android:name=".ListDetail.DetailRecordActivity"
-            android:label="@string/title_activity_italy_map" />
+            android:label="@string/title_activity_detail" />
 
         <activity
             android:name=".ItalyMapActivity"
