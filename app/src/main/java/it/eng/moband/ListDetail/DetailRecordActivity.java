@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.io.IOException;
 
+import it.eng.moband.R;
 import it.eng.moband.db.CptContract;
 import it.eng.moband.db.CptHelperClass;
 import it.eng.moband.db.CptRecord;
@@ -32,7 +33,7 @@ public class DetailRecordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_record);
+        setContentView(R.layout.content_dettaglio);
 
         Log.d("DetailRecordActivity", "onCreate(...)");
 
@@ -68,8 +69,12 @@ public class DetailRecordActivity extends AppCompatActivity {
     }
 
 
-    private void renderDetailRecord(Cursor c)
+    private void renderDetailRecord(CptRecord cr)
     {
+        ((TextView)findViewById(R.id.detail_activity_epicentro)).setText(cr.EPICENTRAL_AREA);
+        //((TextView)findViewById(R.id.detail_activity_data_label)).setText(cr.EPICENTRAL_AREA);
+
+        /*
         Log.d("cpt",c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti._ID)));
         Log.d("cpt",c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_SECT)));
         Log.d("cpt",c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_YEAR)));
@@ -79,7 +84,7 @@ public class DetailRecordActivity extends AppCompatActivity {
         Log.d("cpt",c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_MINUTE)));
         Log.d("cpt",c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA)));
         Log.d("cpt",c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_MAX)));
-
+        */
     }
 
 
