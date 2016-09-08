@@ -41,13 +41,13 @@
                 android:layout_height="wrap_content">
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Data:"
                     android:id="@+id/detail_activity_data_label"/>
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="08/09/2016"
                     android:id="@+id/detail_activity_data"
@@ -64,13 +64,13 @@
                 android:layout_height="wrap_content">
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Ora:"
                     android:id="@+id/detail_activity_ora_label"/>
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="15:00:00"
                     android:id="@+id/detail_activity_ora"
@@ -87,13 +87,13 @@
                 android:layout_height="wrap_content">
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Magnitudo:"
                     android:id="@+id/detail_activity_magnitudo_label"/>
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:text="6.0"
                     android:id="@+id/detail_activity_magnitudo"
