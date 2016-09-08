@@ -7,4 +7,6 @@
     <string name="action_settings">Impostazioni</string>
     <string name="title_activity_italy_map">Mappa</string>
     <string name="title_activity_slide_show">SlideShowActivity</string>
+    <string name="view_on_map">Visualizza sulla mappa</string>
+
 </resources>
