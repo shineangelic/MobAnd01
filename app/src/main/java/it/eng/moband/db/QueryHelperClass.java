@@ -35,7 +35,7 @@ public class QueryHelperClass {
     }
 
 
-    public Cursor getRecordById(int id)
+    public Cursor getRecordById(long id)
     {
         String[] ids = new String[1];
         ids[0] = "" + id ;

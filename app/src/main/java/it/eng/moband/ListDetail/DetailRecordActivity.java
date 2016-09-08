@@ -25,7 +25,7 @@ import it.eng.moband.db.QueryHelperClass;
 public class DetailRecordActivity extends AppCompatActivity {
 
     private final String ITEM_ID = "ITEM_ID";
-    private int idRecord = -1;
+    private long idRecord = -1;
 
     private SQLiteDatabase db;
     private CptHelperClass cptDatabaseH;
@@ -72,7 +72,8 @@ public class DetailRecordActivity extends AppCompatActivity {
     private void renderDetailRecord(CptRecord cr)
     {
         ((TextView)findViewById(R.id.detail_activity_epicentro)).setText(cr.EPICENTRAL_AREA);
-        //((TextView)findViewById(R.id.detail_activity_data_label)).setText(cr.EPICENTRAL_AREA);
+
+        ((TextView)findViewById(R.id.detail_activity_data)).setText(cr.getDateTimeQuake());
 
         /*
         Log.d("cpt",c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti._ID)));
@@ -89,12 +90,13 @@ public class DetailRecordActivity extends AppCompatActivity {
 
 
 
-    private int getIdFromIntent(Intent intent)
+    private long getIdFromIntent(Intent intent)
     {
-        int id = -1;
+        long id = -1;
         try
         {
-            id = intent.getIntExtra(ITEM_ID, -1);
+            String strId = intent.getStringExtra(ITEM_ID);
+            id = Long.valueOf(strId).longValue();
         }
         catch (Exception ex)
         {
