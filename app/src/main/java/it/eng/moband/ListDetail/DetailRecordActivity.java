@@ -64,6 +64,7 @@ public class DetailRecordActivity extends AppCompatActivity {
 
             CptRecord cr = new CptRecord();
             cr.extractRecord(c); // *** in questo punto si possiede il record da renderizzare
+            renderDetailRecord(cr);
         }
 
     }
@@ -73,7 +74,9 @@ public class DetailRecordActivity extends AppCompatActivity {
     {
         ((TextView)findViewById(R.id.detail_activity_epicentro)).setText(cr.EPICENTRAL_AREA);
 
-        ((TextView)findViewById(R.id.detail_activity_data)).setText(cr.getDateTimeQuake());
+        ((TextView)findViewById(R.id.detail_activity_data)).setText(cr.getDateQuake());
+        ((TextView)findViewById(R.id.detail_activity_ora)).setText(cr.getTimeQuake());
+        ((TextView)findViewById(R.id.detail_activity_magnitudo)).setText(cr.INTENSITY_DEF);
 
         /*
         Log.d("cpt",c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti._ID)));
@@ -95,8 +98,7 @@ public class DetailRecordActivity extends AppCompatActivity {
         long id = -1;
         try
         {
-            String strId = intent.getStringExtra(ITEM_ID);
-            id = Long.valueOf(strId).longValue();
+            id = (long)intent.getExtras().get(ITEM_ID);
         }
         catch (Exception ex)
         {
