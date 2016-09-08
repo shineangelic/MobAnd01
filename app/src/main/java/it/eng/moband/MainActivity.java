@@ -6,6 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.view.ActionMode;
+import android.view.ActionMode.Callback;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,7 +27,9 @@ import android.widget.TextView;
 import java.io.IOException;
 
 import it.eng.moband.ListDetail.DetailRecordActivity;
+import it.eng.moband.db.CptContract;
 import it.eng.moband.db.CptHelperClass;
+import it.eng.moband.db.QueryHelperClass;
 
 /**
  * Launcher dell'app, Activity che parte con l'avvio della app
@@ -33,7 +39,9 @@ public class MainActivity extends AppCompatActivity
 
     private SQLiteDatabase db;
     private CptHelperClass cptDatabaseH;
+    private QueryHelperClass qhlp;
     private static final String ITEM_ID = "ITEM_ID";
+    private ActionMode mActionMode = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +62,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        TextView textView = (TextView) findViewById(R.id.valore_magnitudo);
-        textView.setText(getPreferences(Context.MODE_PRIVATE).getString("seekBar","valore Magnitudo non letto"));
+     //   TextView textView = (TextView) findViewById(R.id.valore_magnitudo);
+      //  textView.setText(getPreferences(Context.MODE_PRIVATE).getString("seekBar","valore Magnitudo non letto"));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -70,13 +78,61 @@ public class MainActivity extends AppCompatActivity
         cptDatabaseH = new CptHelperClass(this);
         try {
             cptDatabaseH.preparaDbCopiato();
+            qhlp = new QueryHelperClass(db);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
     }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+
+
+    private Callback mActionModeCallback = new Callback() {
+
+        // Called when the action mode is created; startActionMode() was called
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            // Inflate a menu resource providing context menu items
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.main_contextual_menu, menu);
+            return true;
+        }
+
+        // Called each time the action mode is shown. Always called after onCreateActionMode, but
+        // may be called multiple times if the mode is invalidated.
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false; // Return false if nothing is done
+        }
+
+        // Called when the user selects a contextual menu item
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.view_on_map:
+                    AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                    Cursor c = qhlp.getRecordById(info.id);
+                  //  startMapActivity(c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE)),
+                 //           c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LONGITUDE)));
+                    mode.finish();
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        // Called when the user exits the action mode
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mActionMode = null;
+        }
+    };
+
 
     private void startMapActivity() {
         Intent mostraMappa = new Intent(getApplicationContext(), ItalyMapActivity.class);
@@ -103,6 +159,20 @@ public class MainActivity extends AppCompatActivity
                 Intent i = new Intent(MainActivity.this, DetailRecordActivity.class);
                 i.putExtra(ITEM_ID, id);
                 startActivity(i);
+            }
+        });
+
+        lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (mActionMode != null) {
+                    return false;
+                }
+
+                // Start the CAB using the ActionMode.Callback defined above
+                mActionMode = startActionMode(mActionModeCallback);
+                view.setSelected(true);
+                return true;
             }
         });
 
