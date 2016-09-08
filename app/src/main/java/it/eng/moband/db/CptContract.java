@@ -35,6 +35,7 @@ public class CptContract {
             public static final String COLUMN_NAME_INTENSITY_MAX = "Imax";
             public static final String COLUMN_NAME_LATITUDE = "LatDef";
             public static final String COLUMN_NAME_LONGITUDE = "LonDef";
+            public static final String COLUMN_NAME_DEPTH = "DepDef";
             public static final String COLUMN_NAME_INTENSITY = "MwM";
         }
 

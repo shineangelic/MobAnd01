@@ -78,17 +78,10 @@ public class DetailRecordActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.detail_activity_ora)).setText(cr.getTimeQuake());
         ((TextView)findViewById(R.id.detail_activity_magnitudo)).setText(cr.INTENSITY_DEF);
 
-        /*
-        Log.d("cpt",c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti._ID)));
-        Log.d("cpt",c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_SECT)));
-        Log.d("cpt",c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_YEAR)));
-        Log.d("cpt",c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_MONTH)));
-        Log.d("cpt",c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_DAY)));
-        Log.d("cpt",c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_HOUR)));
-        Log.d("cpt",c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_MINUTE)));
-        Log.d("cpt",c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA)));
-        Log.d("cpt",c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_MAX)));
-        */
+        ((TextView)findViewById(R.id.detail_activity_profondita)).setText(cr.DEPTH + " Km");
+        ((TextView)findViewById(R.id.detail_activity_longitudine)).setText(cr.LONGITUDE);
+        ((TextView)findViewById(R.id.detail_activity_latitudine)).setText(cr.LATITUDE);
+
     }
 
 

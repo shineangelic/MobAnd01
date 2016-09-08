@@ -23,6 +23,7 @@ public class CptRecord {
     public String INTENSITY_MAX = "Imax";
     public String LATITUDE = "LatDef";
     public String LONGITUDE = "LonDef";
+    public String DEPTH = "DepDef";
 
     public void extractRecord(Cursor c)
     {
@@ -44,6 +45,7 @@ public class CptRecord {
 
         LATITUDE = c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE));
         LONGITUDE = c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LONGITUDE));
+        DEPTH = c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_DEPTH));
     }
 
     public String getDateTimeQuake()
