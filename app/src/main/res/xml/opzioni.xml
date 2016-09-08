@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Settings">
+
+        <SeekBarPreference
+            android:id="@+id/sampleSizeSeekBar"
+            android:defaultValue="22"
+            android:title="Set Magnitudo"
+            android:key="seekBar"
+            android:max="10">
+        </SeekBarPreference>
+
+        <CheckBoxPreference
+            android:key="checkboxPref"
+            android:title="Autodecrease music"
+            android:summary=""
+            android:defaultValue="true"/>
+    </PreferenceCategory>
+</PreferenceScreen>
