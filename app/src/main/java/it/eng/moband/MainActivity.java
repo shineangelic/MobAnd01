@@ -82,6 +82,8 @@ public class MainActivity extends AppCompatActivity
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //ottieni DB copiato
+        db = cptDatabaseH.getWritableDatabase();
     }
 
     @Override
@@ -133,7 +135,9 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
-
+    /**
+     * passa alla activity mappa
+     */
     private void startMapActivity() {
         Intent mostraMappa = new Intent(getApplicationContext(), ItalyMapActivity.class);
         startActivity(mostraMappa);
@@ -142,11 +146,27 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        TextView drawer = (TextView) findViewById(R.id.dimensione_DB);
+        final TextView textViewConteggio = (TextView) findViewById(R.id.dimensione_DB);
 
-        //ottieni DB copiato
-        db = cptDatabaseH.getWritableDatabase();
-        drawer.setText("Dimensioni DB: "+ cptDatabaseH.getTotalRecords(db));
+
+        //forma asincrona DI BASE
+        Thread aggiornaConteggio = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final long dim = cptDatabaseH.getTotalRecords(db);
+                //siccome solo il main thread può toccare la UI,
+                //tocca fare un altro thread
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        textViewConteggio.setText("Dimensioni DB: "+ dim);
+                    }
+                });
+
+            }
+        });
+        aggiornaConteggio.start();
+
 
         ListView lista = (ListView) findViewById(R.id.listView);
         Cursor c = cptDatabaseH.getRecordsForList(db);
@@ -227,12 +247,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(mostraSlides);
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
-
+        //chiudi drawer e ritorna, abbiamo passato il controllo
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
