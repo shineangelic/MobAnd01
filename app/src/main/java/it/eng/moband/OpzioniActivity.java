@@ -14,6 +14,8 @@ public class OpzioniActivity extends PreferenceActivity {
         addPreferencesFromResource(R.xml.opzioni);
     }
 
+//TODO vedere la reference implementation su https://developer.android.com/reference/android/preference/PreferenceActivity.html
+
 
 //    SeekBar sampleSizeSeekBar = (SeekBar) findViewById(R.id.sampleSizeSeekBar);
 //    int val = sampleSizeSeekBar.getProgress();
