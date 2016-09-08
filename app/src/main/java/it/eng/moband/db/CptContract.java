@@ -22,6 +22,7 @@ public class CptContract {
         /* Inner class that defines the table contents */
         public static class CatalogoParametricoTerremoti {
             public static final String TABLE_NAME = "cpt15BIS";
+            public static final String _ID = "_id";
             public static final String COLUMN_NAME_SECT = "Sect";
             public static final String COLUMN_NAME_REFNAME = "MainRef";
             public static final String COLUMN_NAME_YEAR = "Year";
