@@ -78,9 +78,20 @@ public class DetailRecordActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.detail_activity_ora)).setText(cr.getTimeQuake());
         ((TextView)findViewById(R.id.detail_activity_magnitudo)).setText(cr.INTENSITY_DEF);
 
-        ((TextView)findViewById(R.id.detail_activity_profondita)).setText(cr.DEPTH + " Km");
-        ((TextView)findViewById(R.id.detail_activity_longitudine)).setText(cr.LONGITUDE + "°");
-        ((TextView)findViewById(R.id.detail_activity_latitudine)).setText(cr.LATITUDE + "°");
+        if (cr.DEPTH.trim() != "")
+            ((TextView)findViewById(R.id.detail_activity_profondita)).setText(cr.DEPTH + " Km");
+        else
+            ((TextView)findViewById(R.id.detail_activity_profondita)).setText("n.d.");
+
+        if (cr.DEPTH.trim() != "")
+            ((TextView)findViewById(R.id.detail_activity_longitudine)).setText(cr.LONGITUDE + "°");
+        else
+            ((TextView)findViewById(R.id.detail_activity_longitudine)).setText("n.d.");
+
+        if (cr.DEPTH.trim() != "")
+            ((TextView)findViewById(R.id.detail_activity_latitudine)).setText(cr.LATITUDE + "°");
+        else
+            ((TextView)findViewById(R.id.detail_activity_latitudine)).setText("n.d.");
     }
 
 
