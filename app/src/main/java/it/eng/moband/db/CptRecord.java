@@ -51,4 +51,13 @@ public class CptRecord {
         return YEAR + "/" + MONTH + "/" + DAY + " " + HOUR + ":" + MINUTE;
     }
 
+    public String getDateQuake()
+    {
+        return YEAR + "/" + MONTH + "/" + DAY;
+    }
+    public String getTimeQuake()
+    {
+        return HOUR + ":" + MINUTE;
+    }
+
 }
