@@ -50,7 +50,7 @@
             android:name=".SlidesActivity"
             android:label="@string/title_activity_slide_show"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ListDetail.DetailRecordActivity"></activity>
+        
     </application>
 
 </manifest>
