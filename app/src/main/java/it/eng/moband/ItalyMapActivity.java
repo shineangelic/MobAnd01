@@ -52,6 +52,7 @@ public class ItalyMapActivity extends AppCompatActivity
         private SQLiteDatabase db;
         private CptHelperClass cptDatabaseH;
 
+
         private TextView mPlaceDetailsText;
 
         private TextView mPlaceAttribution;
@@ -112,9 +113,12 @@ public class ItalyMapActivity extends AppCompatActivity
                 }
 
                 db = cptDatabaseH.getReadableDatabase();
-                //TODO select * qui è devastante. Scrivere query con projection corretta in CptQueryHelperClass
-                String selectQuery = "SELECT  * FROM " + CptContract.CatalogoParametricoTerremoti.TABLE_NAME;
-                Cursor cursor = db.rawQuery(selectQuery, null);
+                //TODO select * qui è devastante. Scrivere query con projection corretta in QueryHelperClass
+
+
+                //String selectQuery = "SELECT  * FROM " + CptContract.CatalogoParametricoTerremoti.TABLE_NAME;
+                //Cursor cursor = db.rawQuery(selectQuery, null);
+                Cursor cursor = cptDatabaseH.getRecordsForList(db);
                 if (cursor.moveToFirst()) {
                         do {
                                 String latitudine = cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE)).replace(",",".");
