@@ -12,5 +12,6 @@
     <string name="title_activity_detail">Dettaglio terremoto</string>
     <string name="updates">Updates .........</string>
     <string name="eula">Eula .........</string>
+    <string name="title_activity_single_event_map">Map</string>
 
 </resources>
