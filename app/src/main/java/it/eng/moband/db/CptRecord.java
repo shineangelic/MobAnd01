@@ -4,12 +4,16 @@ import android.database.Cursor;
 import android.provider.BaseColumns;
 import android.util.Log;
 
+import java.io.Serializable;
+
 /**
  * Created by mamurrone on 08/09/2016.
  */
-public class CptRecord {
+public class CptRecord implements Serializable{
     public CptRecord() {}
 
+    //TODO questa classe non è encapsulata. Rendere private le variabili
+    //ed aggiungere metodi getter/setter
     public String ID = "_ID";
     public String SECT = "Sect";
     public String REFNAME = "MainRef";
@@ -48,15 +52,18 @@ public class CptRecord {
         DEPTH = c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_DEPTH));
     }
 
+    //TODO questo metodo dovrebbe tornare Date pura, da formattare successivamente sulla view
     public String getDateTimeQuake()
     {
         return YEAR + "/" + MONTH + "/" + DAY + " " + HOUR + ":" + MINUTE;
     }
-
+    //TODO come sopra
     public String getDateQuake()
     {
         return YEAR + "/" + MONTH + "/" + DAY;
     }
+
+    // questo è OK
     public String getTimeQuake()
     {
         return HOUR + ":" + MINUTE;

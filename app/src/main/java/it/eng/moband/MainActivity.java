@@ -1,6 +1,5 @@
 package it.eng.moband;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,13 +20,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.io.IOException;
 
-import it.eng.moband.ListDetail.DetailRecordActivity;
-import it.eng.moband.db.CptContract;
+import it.eng.moband.listdetail.DetailRecordActivity;
 import it.eng.moband.db.CptHelperClass;
 import it.eng.moband.db.QueryHelperClass;
 
@@ -82,6 +79,8 @@ public class MainActivity extends AppCompatActivity
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //ottieni DB copiato
+        db = cptDatabaseH.getWritableDatabase();
     }
 
     @Override
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity
         // Called when the action mode is created; startActionMode() was called
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            // Inflate a menu resource providing context menu items
+            //TODO l'inflate dovrebbe avvenire in basso, appena sopra i bottoni "fisici"
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.main_contextual_menu, menu);
             return true;
@@ -133,7 +132,9 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
-
+    /**
+     * passa alla activity mappa
+     */
     private void startMapActivity() {
         Intent mostraMappa = new Intent(getApplicationContext(), ItalyMapActivity.class);
         startActivity(mostraMappa);
@@ -142,11 +143,27 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        TextView drawer = (TextView) findViewById(R.id.dimensione_DB);
+        final TextView textViewConteggio = (TextView) findViewById(R.id.dimensione_DB);
 
-        //ottieni DB copiato
-        db = cptDatabaseH.getWritableDatabase();
-        drawer.setText("Dimensioni DB: "+ cptDatabaseH.getTotalRecords(db));
+
+        //forma asincrona DI BASE
+        Thread aggiornaConteggio = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final long dim = cptDatabaseH.getTotalRecords(db);
+                //siccome solo il main thread può toccare la UI,
+                //tocca fare un altro thread
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        textViewConteggio.setText("Dimensioni DB: "+ dim);
+                    }
+                });
+
+            }
+        });
+        aggiornaConteggio.start();
+
 
         ListView lista = (ListView) findViewById(R.id.listView);
         Cursor c = cptDatabaseH.getRecordsForList(db);
@@ -227,12 +244,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(mostraSlides);
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
-
+        //chiudi drawer e ritorna, abbiamo passato il controllo
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

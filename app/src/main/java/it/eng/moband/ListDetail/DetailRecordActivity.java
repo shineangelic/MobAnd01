@@ -1,4 +1,4 @@
-package it.eng.moband.ListDetail;
+package it.eng.moband.listdetail;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -6,13 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.io.IOException;
 
 import it.eng.moband.R;
-import it.eng.moband.db.CptContract;
 import it.eng.moband.db.CptHelperClass;
 import it.eng.moband.db.CptRecord;
 import it.eng.moband.db.QueryHelperClass;

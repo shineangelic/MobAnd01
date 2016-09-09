@@ -1,48 +1,35 @@
 package it.eng.moband;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
-import android.text.Spanned;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.drive.Permission;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 
-import it.eng.moband.ListDetail.DetailRecordActivity;
+import it.eng.moband.listdetail.DetailRecordActivity;
 import it.eng.moband.db.CptContract;
 import it.eng.moband.db.CptHelperClass;
 
@@ -82,16 +69,7 @@ public class ItalyMapActivity extends AppCompatActivity
                 SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.map);
                 mapFragment.getMapAsync(this);
-
-
-
-              
-
-
         }
-
-
-
 
 
         @Override
@@ -125,15 +103,16 @@ public class ItalyMapActivity extends AppCompatActivity
 
                 }
 
-
+                //TODO caricamento asincrono, lanciato subito dopo mapFragment.getMapAsync(this);
                 cptDatabaseH = new CptHelperClass(this);
                 try {
                         cptDatabaseH.preparaDbCopiato();
                 } catch (IOException e) {
                         e.printStackTrace();
                 }
-                //ottieni DB copiato
+
                 db = cptDatabaseH.getReadableDatabase();
+                //TODO select * qui è devastante. Scrivere query con projection corretta in QueryHelperClass
                 String selectQuery = "SELECT  * FROM " + CptContract.CatalogoParametricoTerremoti.TABLE_NAME;
                 Cursor cursor = db.rawQuery(selectQuery, null);
                 if (cursor.moveToFirst()) {
