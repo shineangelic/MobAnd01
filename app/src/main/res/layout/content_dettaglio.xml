@@ -17,11 +17,12 @@
         android:id="@+id/detail_activity_epicentro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/detail_activity_title_background"
         android:gravity="center"
         android:textColor="@android:color/white"
         android:textSize="45sp"
-        tools:text="Epicentro" />
+        tools:text="Epicentro"
+        />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
