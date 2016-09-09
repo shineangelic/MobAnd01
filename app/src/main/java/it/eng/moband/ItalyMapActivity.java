@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +60,7 @@ public class ItalyMapActivity extends AppCompatActivity
     private TextView mPlaceDetailsText;
 
     private TextView mPlaceAttribution;
+    private SeekBar s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,25 @@ public class ItalyMapActivity extends AppCompatActivity
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        s = (SeekBar) findViewById(R.id.ricercaAnnoDa);
+        s.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                Cursor c = cptDatabaseH.getRecordsForList(db, ((seekBar.getProgress()*1014)/100)+1000);
+                mGoogleMap.clear();
+                ridisegnaMarker(c);
+            }
+        });
         mapFragment.getMapAsync(this);
 
     }
@@ -114,6 +135,11 @@ public class ItalyMapActivity extends AppCompatActivity
         //String selectQuery = "SELECT  * FROM " + CptContract.CatalogoParametricoTerremoti.TABLE_NAME;
         //Cursor cursor = db.rawQuery(selectQuery, null);
         final Cursor cursor = cptDatabaseH.getRecordsForList(db);
+        ridisegnaMarker(cursor);
+    }
+
+    private void ridisegnaMarker(Cursor cursor) {
+        mGoogleMap.clear();
         if (cursor.moveToFirst()) {
             do {
                 String latitudine = cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE)).replace(",", ".");
@@ -164,7 +190,7 @@ public class ItalyMapActivity extends AppCompatActivity
                 @Override
                 public boolean onMarkerClick(Marker arg0) {
                     Intent i = new Intent(ItalyMapActivity.this, DetailRecordActivity.class);
-                    i.putExtra("ITEM_ID",(Long) arg0.getTag());
+                    i.putExtra("ITEM_ID", (Long) arg0.getTag());
                     startActivity(i);
 
 
