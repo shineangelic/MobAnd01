@@ -3,6 +3,7 @@ package it.eng.moband.listdetail;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import it.eng.moband.R;
 import it.eng.moband.db.CptHelperClass;
 import it.eng.moband.db.CptQueryHelperClass;
 import it.eng.moband.db.CptRecord;
+import it.eng.moband.exceptions.DbClosedException;
 import it.eng.moband.exceptions.NullObjectException;
 import it.eng.moband.Constants.CptConstants;
 import it.eng.moband.exceptions.TooManyRecordsException;
@@ -44,23 +46,26 @@ public class DetailRecordActivity extends AppCompatActivity {
         OpenDB();
         if (idRecord > 0)
         {
-            CptQueryHelperClass qhc = new CptQueryHelperClass(db);
-
-            Log.d("DetailRecordActivity", "Dal DB recupera il record con idRecord = " + idRecord);
-            Cursor c = getRecordDetailQuakeAsCursor(idRecord);
-
-
-            if (c != null) {
-                CptRecord cr = new CptRecord();
-                try {
-                    cr.extractRecord(c); // *** in questo punto si possiede il record da renderizzare
-                } catch (NullObjectException e) {
-                    e.printStackTrace();
-                } catch (TooManyRecordsException e) {
-                    e.printStackTrace();
-                }
-                renderDetailRecord(cr);
+            CptQueryHelperClass qhlp = new CptQueryHelperClass(db);
+            CptRecord quake = null;
+            try {
+                quake = qhlp.getRecordDaoById(idRecord);
+            } catch (NullObjectException e) {
+                e.printStackTrace();
+            } catch (TooManyRecordsException e) {
+                e.printStackTrace();
             }
+            catch (DbClosedException e){
+                e.printStackTrace();
+            }
+
+            // *** in questo punto si possiede il record da renderizzare
+
+            if (quake != null)
+                renderDetailRecord(quake);
+            else
+                finish();
+
         }
 
     }
@@ -68,34 +73,17 @@ public class DetailRecordActivity extends AppCompatActivity {
 
 
 
-    private Cursor getRecordDetailQuakeAsCursor(long idRecord)
-    {
-        CptQueryHelperClass qhc = new CptQueryHelperClass(db);
-
-        Log.d("DetailRecordActivity", "Dal DB recupera il record con idRecord = " + idRecord);
-        Cursor c = null;
-        try {
-            c = qhc.getRecordById(idRecord);
-        }
-        catch (NullObjectException ex)
-        {
-            Log.e(CptConstants.LOG_TAG ,"il cursore non ha restituito record / il DB è vuoto.");
-        }
-        return  c;
-    }
 
     private void OpenDB()
     {
         cptDatabaseH = new CptHelperClass(this);
-        try {
-            cptDatabaseH.preparaDbCopiato();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         Log.d("DetailRecordActivity", "Apre db.");
-        db = cptDatabaseH.getWritableDatabase();
+        //db = cptDatabaseH.getWritableDatabase();
+        db = cptDatabaseH.getReadableDatabase();
     }
+
+
 
 
 
@@ -117,20 +105,20 @@ public class DetailRecordActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.detail_activity_ora)).setText(cr.getTimeQuake());
         ((TextView)findViewById(R.id.detail_activity_magnitudo)).setText(cr.getINTENSITY_DEF());
 
-        if (cr.getDEPTH().trim() != "")
-            ((TextView)findViewById(R.id.detail_activity_profondita)).setText(cr.getDEPTH() + " Km");
-        else
+        if (cr.getDEPTH().trim().equals(new String("")))
             ((TextView)findViewById(R.id.detail_activity_profondita)).setText("n.d.");
-
-        if (cr.getDEPTH().trim() != "")
-            ((TextView)findViewById(R.id.detail_activity_longitudine)).setText(cr.getLONGITUDE() + "°");
         else
+            ((TextView)findViewById(R.id.detail_activity_profondita)).setText(cr.getDEPTH() + " Km");
+
+        if (cr.getLONGITUDE().trim().equals(new String("")))
             ((TextView)findViewById(R.id.detail_activity_longitudine)).setText("n.d.");
-
-        if (cr.getDEPTH().trim() != "")
-            ((TextView)findViewById(R.id.detail_activity_latitudine)).setText(cr.getLATITUDE() + "°");
         else
+            ((TextView)findViewById(R.id.detail_activity_longitudine)).setText(cr.getLONGITUDE() + "°");
+
+        if (cr.getLATITUDE().trim().equals(new String("")))
             ((TextView)findViewById(R.id.detail_activity_latitudine)).setText("n.d.");
+        else
+            ((TextView)findViewById(R.id.detail_activity_latitudine)).setText(cr.getLATITUDE() + "°");
     }
 
 
