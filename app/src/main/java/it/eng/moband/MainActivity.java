@@ -18,6 +18,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
@@ -34,13 +35,13 @@ import it.eng.moband.db.CptHelperClass;
  * Launcher dell'app, Activity che parte con l'avvio della app
  */
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+                   SearchView.OnQueryTextListener {
 
     private SQLiteDatabase db;
     private CptHelperClass cptDatabaseH;
     private CptQueryHelperClass qhlp;
     private static final String ITEM_ID = "ITEM_ID";
-    private ActionMode mActionMode = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +97,9 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        SearchView searchView = (SearchView) findViewById(R.id.filtroLista);
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(this);
     }
 
     /**
@@ -156,6 +160,35 @@ public class MainActivity extends AppCompatActivity
         }
         return false;
     }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        try {
+            Cursor c = qhlp.getRecordByArea((query != null ? '%' + query + '%' : "@@@@"));
+            ListView v = (ListView) findViewById(R.id.listView);
+            v.setAdapter(new MyCursorAdaper(MainActivity.this,c));
+            return true;
+        }
+        catch(Exception e){
+            Log.e("MobAND", e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        try {
+            Cursor c = qhlp.getRecordByArea((query != null ? '%' + query + '%' : "@@@@"));
+            ListView v = (ListView) findViewById(R.id.listView);
+            v.setAdapter(new MyCursorAdaper(MainActivity.this,c));
+            return true;
+        }
+        catch(Exception e){
+            Log.e("MobAND", e.getMessage());
+            return false;
+        }
+    }
+
 
     @Override
     public void onBackPressed() {
