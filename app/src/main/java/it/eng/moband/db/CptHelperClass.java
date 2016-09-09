@@ -29,14 +29,12 @@ public class CptHelperClass extends SQLiteOpenHelper {
      * @param context
      */
     public CptHelperClass(Context context) {
-
         super(context, DB_NAME, null, 1);
         this.myContext = context;
         this.dbPath = "/data/data/" + myContext.getPackageName() + "/databases/" + DB_NAME;
     }
 
     public long getTotalRecords(SQLiteDatabase db) {
-        //contatutto
         long pip = DatabaseUtils.queryNumEntries(db, CptContract.CatalogoParametricoTerremoti.TABLE_NAME, null, null);
         Log.i("MOBAND", "getTotalRecords():" + pip);
         return pip;

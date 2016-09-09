@@ -3,6 +3,7 @@ package it.eng.moband.listdetail;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import it.eng.moband.R;
 import it.eng.moband.db.CptHelperClass;
 import it.eng.moband.db.CptQueryHelperClass;
 import it.eng.moband.db.CptRecord;
+import it.eng.moband.exceptions.DbClosedException;
 import it.eng.moband.exceptions.NullObjectException;
 import it.eng.moband.Constants.CptConstants;
 import it.eng.moband.exceptions.TooManyRecordsException;
@@ -53,6 +55,9 @@ public class DetailRecordActivity extends AppCompatActivity {
             } catch (TooManyRecordsException e) {
                 e.printStackTrace();
             }
+            catch (DbClosedException e){
+                e.printStackTrace();
+            }
 
             // *** in questo punto si possiede il record da renderizzare
 
@@ -72,14 +77,10 @@ public class DetailRecordActivity extends AppCompatActivity {
     private void OpenDB()
     {
         cptDatabaseH = new CptHelperClass(this);
-        try {
-            cptDatabaseH.preparaDbCopiato();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         Log.d("DetailRecordActivity", "Apre db.");
-        db = cptDatabaseH.getWritableDatabase();
+        //db = cptDatabaseH.getWritableDatabase();
+        db = cptDatabaseH.getReadableDatabase();
     }
 
 

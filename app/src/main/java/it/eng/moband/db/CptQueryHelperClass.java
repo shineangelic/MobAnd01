@@ -8,6 +8,7 @@ import android.util.Log;
 
 import it.eng.moband.MainActivity;
 import it.eng.moband.db.CptContract;
+import it.eng.moband.exceptions.DbClosedException;
 import it.eng.moband.exceptions.NullObjectException;
 import it.eng.moband.exceptions.TooManyRecordsException;
 
@@ -24,12 +25,12 @@ public class CptQueryHelperClass {
 
 
 
-    public Cursor getRecordById(long id) throws NullObjectException {
+    public Cursor getRecordById(long id) throws NullObjectException, DbClosedException {
         if (mDB == null)
-            throw new NullObjectException("DB null - it's impossible to get some data.");
+            throw new NullObjectException("DB null - it's impossible to get any data.");
 
         if (!mDB.isOpen())
-            mDB.isOpen();
+            throw new DbClosedException("DB closed - it's impossible to get any data.");
 
         String[] ids = new String[1];
         ids[0] = "" + id;
@@ -39,7 +40,7 @@ public class CptQueryHelperClass {
         return c;
     }
 
-    public CptRecord getRecordDaoById(long id) throws NullObjectException, TooManyRecordsException {
+    public CptRecord getRecordDaoById(long id) throws NullObjectException, TooManyRecordsException, DbClosedException {
         Cursor c = this.getRecordById(id);
 
         if (c != null)
