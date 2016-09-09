@@ -16,7 +16,7 @@
         android:id="@+id/uelcom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Benvenuti a MobAnd!" />
+        android:text="Lista dei terremoti italiani dal 1000 al 2014" />
 
     <TextView
         android:id="@+id/dimensione_DB"
@@ -25,6 +25,8 @@
         android:layout_height="wrap_content" />
 
     <SearchView
+        android:id="@+id/filtroLista"
+        android:layout_below="@id/dimensione_DB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="textStart"
@@ -33,7 +35,7 @@
     </SearchView>
     <ListView
         android:id="@+id/listView"
-        android:layout_below="@id/dimensione_DB"
+        android:layout_below="@id/filtroLista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         >
