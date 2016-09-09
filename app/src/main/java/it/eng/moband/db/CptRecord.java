@@ -3,7 +3,9 @@ package it.eng.moband.db;
 import android.database.Cursor;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import it.eng.moband.exceptions.NullObjectException;
 import it.eng.moband.exceptions.TooManyRecordsException;
@@ -105,25 +107,18 @@ public class CptRecord implements Serializable{
 
 
     //TODO questo metodo dovrebbe tornare Date pura, da formattare successivamente sulla view
-    public SimpleDateFormat getDateTimeQuake()
-    {
+    public Date getDateTimeQuake() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); // creo l'oggetto
-
         String dtQuake =  YEAR + "/" + MONTH + "/" + DAY + " " + HOUR + ":" + MINUTE + ":00";
-        String dataStr = sdf.format(dtQuake);
-
-        return sdf;
+        return sdf.parse(dtQuake);
     }
 
     //TODO come sopra
-    public SimpleDateFormat getDateQuake()
-    {
+    public Date getDateQuake() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd"); // creo l'oggetto
-
         String dtQuake =  YEAR + "/" + MONTH + "/" + DAY;
-        String dataStr = sdf.format(dtQuake);
+        return sdf.parse(dtQuake);
 
-        return sdf;
     }
 
     // questo è OK

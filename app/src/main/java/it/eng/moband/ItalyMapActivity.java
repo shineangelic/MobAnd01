@@ -112,7 +112,7 @@ public class ItalyMapActivity extends AppCompatActivity
                 }
 
                 db = cptDatabaseH.getReadableDatabase();
-                //TODO select * qui è devastante. Scrivere query con projection corretta in QueryHelperClass
+                //TODO select * qui è devastante. Scrivere query con projection corretta in CptQueryHelperClass
                 String selectQuery = "SELECT  * FROM " + CptContract.CatalogoParametricoTerremoti.TABLE_NAME;
                 Cursor cursor = db.rawQuery(selectQuery, null);
                 if (cursor.moveToFirst()) {

@@ -24,9 +24,9 @@ import android.widget.TextView;
 
 import java.io.IOException;
 
+import it.eng.moband.db.CptQueryHelperClass;
 import it.eng.moband.listdetail.DetailRecordActivity;
 import it.eng.moband.db.CptHelperClass;
-import it.eng.moband.db.QueryHelperClass;
 
 /**
  * Launcher dell'app, Activity che parte con l'avvio della app
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity
 
     private SQLiteDatabase db;
     private CptHelperClass cptDatabaseH;
-    private QueryHelperClass qhlp;
+    private CptQueryHelperClass qhlp;
     private static final String ITEM_ID = "ITEM_ID";
     private ActionMode mActionMode = null;
 
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity
         cptDatabaseH = new CptHelperClass(this);
         try {
             cptDatabaseH.preparaDbCopiato();
-            qhlp = new QueryHelperClass(db);
+            qhlp = new CptQueryHelperClass(db);
         } catch (IOException e) {
             e.printStackTrace();
         }
