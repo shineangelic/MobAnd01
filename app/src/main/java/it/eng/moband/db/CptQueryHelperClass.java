@@ -9,6 +9,7 @@ import android.util.Log;
 import it.eng.moband.MainActivity;
 import it.eng.moband.db.CptContract;
 import it.eng.moband.exceptions.NullObjectException;
+import it.eng.moband.exceptions.TooManyRecordsException;
 
 /**
  * Created by mamurrone on 08/09/2016.
@@ -33,17 +34,23 @@ public class CptQueryHelperClass {
 
         String[] ids = new String[1];
         ids[0] = "" + id;
-        //TODO controllare che il DB sia aperto
-
 
         Cursor c = mDB.query(CptContract.CatalogoParametricoTerremoti.TABLE_NAME, null, "_ID = ?", ids, null, null, null);
 
+        return c;
+    }
+
+    public CptRecord getRecordDaoById(long id) throws NullObjectException, TooManyRecordsException {
+        Cursor c = this.getRecordById(id);
+
         if (c != null)
             if (c.getCount() == 1)
-                return c;
-
-        logCurrentRow(c);
-        return null;
+            {
+                CptRecord rec = new CptRecord();
+                rec.extractRecord(c);
+                return  rec;
+            }
+        return  null;
     }
 
     public Cursor getAllRecords() {
