@@ -13,11 +13,11 @@ import it.eng.moband.exceptions.NullObjectException;
 /**
  * Created by mamurrone on 08/09/2016.
  */
-public class QueryHelperClass {
+public class CptQueryHelperClass {
 
     private SQLiteDatabase mDB;
 
-    public QueryHelperClass(SQLiteDatabase db) {
+    public CptQueryHelperClass(SQLiteDatabase db) {
         mDB = db;
     }
 
