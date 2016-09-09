@@ -19,7 +19,7 @@ public class OpzioniActivity extends PreferenceActivity {
 
 //    SeekBar sampleSizeSeekBar = (SeekBar) findViewById(R.id.sampleSizeSeekBar);
 //    int val = sampleSizeSeekBar.getProgress();
-/*    SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+  /*  SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
     editor.putString("name", "Elena");
     editor.putInt("idName", 12);
     editor.commit();

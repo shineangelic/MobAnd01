@@ -46,7 +46,10 @@ public class CptHelperClass extends SQLiteOpenHelper {
         //contatutto
         String[] columns = new String[]{"_id",
                 CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA,
-                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LONGITUDE,
+                CptContract.CatalogoParametricoTerremoti._ID
         };
 
         Cursor data = db.query(
