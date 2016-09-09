@@ -19,6 +19,7 @@ import java.io.IOException;
 import it.eng.moband.db.CptContract;
 import it.eng.moband.db.CptHelperClass;
 import it.eng.moband.db.CptQueryHelperClass;
+import it.eng.moband.exceptions.DbClosedException;
 import it.eng.moband.exceptions.NullObjectException;
 import it.eng.moband.listdetail.DetailRecordActivity;
 
@@ -77,6 +78,8 @@ public class SingleEventMapActivity extends FragmentActivity implements OnMapRea
 
                 }
             } catch (NullObjectException e) {
+                e.printStackTrace();
+            } catch (DbClosedException e) {
                 e.printStackTrace();
             }
         }
