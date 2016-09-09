@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //ottieni DB copiato
-        db = cptDatabaseH.getWritableDatabase();
         cptDatabaseH = new CptHelperClass(this);
+        db = cptDatabaseH.getWritableDatabase();
         try {
             cptDatabaseH.preparaDbCopiato();
             qhlp = new QueryHelperClass(db);
