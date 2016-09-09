@@ -8,9 +8,11 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior" >
     <!--tools:context="it.eng.moband.DetailRecordActivity" -->
     <!--tools:showIn="@layout/app_bar_main" -->
+
+
     <TextView
         android:id="@+id/detail_activity_epicentro"
         android:layout_width="match_parent"
@@ -36,7 +38,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp">
 
                 <ImageView
                     android:id="@+id/detail_activity_data_icon"
@@ -71,7 +74,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp">
 
                 <ImageView
                     android:id="@+id/detail_activity_ora_icon"
@@ -106,7 +110,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp">
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/detail_activity_magnitudo_label"
@@ -133,7 +138,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp">
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/detail_activity_profondita_label"
@@ -161,7 +167,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp">
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/detail_activity_latitudine_label"
@@ -189,7 +196,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp">
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/detail_activity_longitudine_label"
