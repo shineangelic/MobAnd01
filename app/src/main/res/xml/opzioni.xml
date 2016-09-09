@@ -6,16 +6,10 @@
 
         <SeekBarPreference
             android:id="@+id/sampleSizeSeekBar"
-            android:defaultValue="22"
+            android:defaultValue="5"
             android:title="Set Magnitudo"
             android:key="seekBar"
             android:max="10">
         </SeekBarPreference>
-
-        <CheckBoxPreference
-            android:key="checkboxPref"
-            android:title="Autodecrease music"
-            android:summary=""
-            android:defaultValue="true"/>
     </PreferenceCategory>
 </PreferenceScreen>
