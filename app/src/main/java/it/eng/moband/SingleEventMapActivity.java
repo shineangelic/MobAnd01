@@ -35,6 +35,18 @@ public class SingleEventMapActivity extends FragmentActivity implements OnMapRea
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_event_map);
 
+
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mGoogleMap = googleMap;
         Intent i = getIntent();
         final long id_terr = i.getLongExtra("ITEM_ID",0);
 
@@ -71,7 +83,7 @@ public class SingleEventMapActivity extends FragmentActivity implements OnMapRea
                             });
                                 /*markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));*/
                             mGoogleMap.addMarker(markerOptions);
-                            mGoogleMap.setMinZoomPreference(5);
+                            mGoogleMap.setMinZoomPreference(15);
                             mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                         }
                     } while (cursor.moveToNext());
@@ -84,18 +96,6 @@ public class SingleEventMapActivity extends FragmentActivity implements OnMapRea
                 e.printStackTrace();
             }
         }
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-    }
-
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mGoogleMap = googleMap;
-
         // Add a marker in Sydney and move the camera
        /* LatLng sydney = new LatLng(-34, 151);
         mGoogleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));

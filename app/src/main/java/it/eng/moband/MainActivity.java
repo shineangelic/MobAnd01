@@ -36,6 +36,10 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
                    SearchView.OnQueryTextListener {
 
+    //Per rimuove la configurazione del proxy da GitHub eseguire i seguenti comandi da prompt
+    //git config --global --unset http.proxy
+    //git config --global --unset https.proxy
+
     private SQLiteDatabase db;
     private CptHelperClass cptDatabaseH;
     private CptQueryHelperClass cptQueryHelper;

@@ -150,6 +150,37 @@ public class CptHelperClass extends SQLiteOpenHelper {
         Log.w("MOBAND", "DB onUpgrade() vuota");
     }
 
+    public Cursor getRecordsForList(SQLiteDatabase db, int progress) {
+        //contatutto
+        String[] columns = new String[]{"_id",
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LONGITUDE,
+                CptContract.CatalogoParametricoTerremoti._ID
+        };
+
+        Cursor data = db.query(
+                CptContract.CatalogoParametricoTerremoti.TABLE_NAME,
+                columns,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY + " IS NOT NULL AND " +
+                        CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY + " != '' AND " +
+                        CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE + " IS NOT NULL AND "+
+                        CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE + " != '' AND "+
+                        CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_YEAR + " >= " + progress ,
+                null,
+                null,
+                null,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA,
+                null);
+
+       /* data.moveToFirst();
+        for (int i=0; i<data.getCount(); i++) {
+            Log.i("MOBAND", "Epicentro:" + data.getString(6) + ", Magnitudo Max: " + data.getString(8));
+            data.moveToNext();
+        }*/
+        return data;
+    }
 }
 
 

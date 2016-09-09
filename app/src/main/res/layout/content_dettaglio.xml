@@ -17,249 +17,272 @@
         android:id="@+id/detail_activity_epicentro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/detail_activity_title_background"
         android:gravity="center"
         android:textColor="@android:color/white"
         android:textSize="45sp"
-        tools:text="Epicentro" />
+        tools:text="Epicentro"
+        />
 
-
-    <android.support.v7.widget.LinearLayoutCompat
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/detail_activity_epicentro"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:orientation="vertical">
+        android:fillViewport="true"
+        android:layout_below="@id/detail_activity_epicentro">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RelativeLayout
+            <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp">
+                android:layout_below="@id/detail_activity_epicentro"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/detail_activity_data_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_date"
-                    android:alpha="0.6"/>
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/detail_activity_data_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/detail_activity_data_icon"
-
-                    android:text="Data:"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:paddingLeft="5dp"/>
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/detail_activity_data"
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/detail_activity_data_label"
-                    android:gravity="right"
-                    android:textSize="20sp"
-                    tools:text="08/09/2016" />
-            </RelativeLayout>
-        </android.support.v7.widget.CardView>
+                    android:layout_marginBottom="10dp">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp">
+                        <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
 
-                <ImageView
-                    android:id="@+id/detail_activity_ora_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_time"
-                    android:alpha="0.5"/>
+                        <ImageView
+                            android:id="@+id/detail_activity_data_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_date"
+                            android:alpha="0.6"/>
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/detail_activity_ora_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/detail_activity_ora_icon"
-                    android:text="Ora:"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:paddingLeft="5dp"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/detail_activity_data_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/detail_activity_data_icon"
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/detail_activity_ora"
+                            android:text="Data:"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:paddingLeft="5dp"/>
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/detail_activity_data"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/detail_activity_data_label"
+                            android:gravity="right"
+                            android:textSize="20sp"
+                            tools:text="08/09/2016" />
+                    </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:id="@+id/detail_activity_ora_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_time"
+                                android:alpha="0.5"/>
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/detail_activity_ora_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/detail_activity_ora_icon"
+                                android:text="Ora:"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                android:paddingLeft="5dp"/>
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/detail_activity_ora"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/detail_activity_ora_label"
+                                android:gravity="right"
+                                android:textSize="20sp"
+                                tools:text="15:00:00" />
+                        </RelativeLayout>
+
+
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                </android.support.v7.widget.CardView>
+
+
+
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/detail_activity_ora_label"
-                    android:gravity="right"
-                    android:textSize="20sp"
-                    tools:text="15:00:00" />
-            </RelativeLayout>
+                    android:layout_marginBottom="10dp">
 
-        </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp">
 
-                <ImageView
-                    android:id="@+id/detail_activity_magnitudo_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_magnitude"
-                    android:alpha="0.5"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/detail_activity_magnitudo_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Magnitudo:"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_toRightOf="@id/detail_activity_magnitudo_icon"
-                    android:paddingLeft="5dp"/>
+                        <ImageView
+                            android:id="@+id/detail_activity_magnitudo_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_magnitude"
+                            android:alpha="0.5"/>
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/detail_activity_magnitudo"
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/detail_activity_magnitudo_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Magnitudo:"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/detail_activity_magnitudo_icon"
+                            android:paddingLeft="5dp"/>
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/detail_activity_magnitudo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/detail_activity_magnitudo_label"
+                            android:gravity="right"
+                            android:textSize="20sp"
+                            tools:text="6.0" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/detail_activity_profondita_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_depth"
+                            android:alpha="0.5"/>
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/detail_activity_profondita_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Profondità:"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/detail_activity_profondita_icon"
+                            android:paddingLeft="5dp"/>
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/detail_activity_profondita"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/detail_activity_profondita_label"
+                            android:gravity="right"
+                            android:textSize="20sp"
+                            tools:text="8" />
+                    </RelativeLayout>
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                </android.support.v7.widget.CardView>
+
+
+
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/detail_activity_magnitudo_label"
-                    android:gravity="right"
-                    android:textSize="20sp"
-                    tools:text="6.0" />
-            </RelativeLayout>
-        </android.support.v7.widget.CardView>
+                    android:layout_marginBottom="10dp">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
 
-                <ImageView
-                    android:id="@+id/detail_activity_profondita_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_depth"
-                    android:alpha="0.5"/>
+                        <ImageView
+                            android:id="@+id/detail_activity_latitude_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_lat_log"
+                            android:alpha="0.5"/>
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/detail_activity_profondita_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Profondità:"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_toRightOf="@id/detail_activity_profondita_icon"
-                    android:paddingLeft="5dp"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/detail_activity_latitudine_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Latitudine:"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/detail_activity_latitude_icon"
+                            android:paddingLeft="5dp"/>
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/detail_activity_profondita"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/detail_activity_profondita_label"
-                    android:gravity="right"
-                    android:textSize="20sp"
-                    tools:text="8" />
-            </RelativeLayout>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/detail_activity_latitudine"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/detail_activity_latitudine_label"
+                            android:gravity="right"
+                            android:textSize="20sp"
+                            tools:text="76.09876" />
+                    </RelativeLayout>
 
-        </android.support.v7.widget.CardView>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/detail_activity_logitudine_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_lat_log"
+                            android:alpha="0.5"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/detail_activity_longitudine_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Longitudine:"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@id/detail_activity_logitudine_icon"
+                            android:paddingLeft="5dp"/>
 
-                <ImageView
-                    android:id="@+id/detail_activity_latitude_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_lat_log"
-                    android:alpha="0.5"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/detail_activity_longitudine"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/detail_activity_longitudine_label"
+                            android:gravity="right"
+                            android:textSize="20sp"
+                            tools:text="43.12345" />
+                    </RelativeLayout>
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/detail_activity_latitudine_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Latitudine:"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_toRightOf="@id/detail_activity_latitude_icon"
-                    android:paddingLeft="5dp"/>
+                    </android.support.v7.widget.LinearLayoutCompat>
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/detail_activity_latitudine"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/detail_activity_latitudine_label"
-                    android:gravity="right"
-                    android:textSize="20sp"
-                    tools:text="76.09876" />
-            </RelativeLayout>
+                </android.support.v7.widget.CardView>
 
-        </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp">
-
-                <ImageView
-                    android:id="@+id/detail_activity_logitudine_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_lat_log"
-                    android:alpha="0.5"/>
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/detail_activity_longitudine_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Longitudine:"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_toRightOf="@id/detail_activity_logitudine_icon"
-                    android:paddingLeft="5dp"/>
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/detail_activity_longitudine"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/detail_activity_longitudine_label"
-                    android:gravity="right"
-                    android:textSize="20sp"
-                    tools:text="43.12345" />
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
-
-    </android.support.v7.widget.LinearLayoutCompat>
-
+            </android.support.v7.widget.LinearLayoutCompat>
+        </ScrollView>
 
 </RelativeLayout>
 
