@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.ActionMode.Callback;
 import android.view.ContextMenu;
@@ -71,7 +72,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
+        //ottieni DB copiato
+        db = cptDatabaseH.getWritableDatabase();
         cptDatabaseH = new CptHelperClass(this);
         try {
             cptDatabaseH.preparaDbCopiato();
@@ -79,58 +81,21 @@ public class MainActivity extends AppCompatActivity
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //ottieni DB copiato
-        db = cptDatabaseH.getWritableDatabase();
-    }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-    }
+        ListView v = (ListView) findViewById(R.id.listView);
+        registerForContextMenu(v);
+        v.setAdapter(new MyCursorAdaper(MainActivity.this, cptDatabaseH.getRecordsForList(db)));
 
-
-
-    private Callback mActionModeCallback = new Callback() {
-
-        // Called when the action mode is created; startActionMode() was called
-        @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            //TODO l'inflate dovrebbe avvenire in basso, appena sopra i bottoni "fisici"
-            MenuInflater inflater = mode.getMenuInflater();
-            inflater.inflate(R.menu.main_contextual_menu, menu);
-            return true;
-        }
-
-        // Called each time the action mode is shown. Always called after onCreateActionMode, but
-        // may be called multiple times if the mode is invalidated.
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            return false; // Return false if nothing is done
-        }
-
-        // Called when the user selects a contextual menu item
-        @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.view_on_map:
-                    AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-                    Cursor c = qhlp.getRecordById(info.id);
-                  //  startMapActivity(c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE)),
-                 //           c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LONGITUDE)));
-                    mode.finish();
-                    return true;
-                default:
-                    return false;
+        v.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(MainActivity.this, DetailRecordActivity.class);
+                i.putExtra(ITEM_ID, id);
+                startActivity(i);
             }
-        }
+        });
 
-        // Called when the user exits the action mode
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {
-            mActionMode = null;
-        }
-    };
+    }
 
     /**
      * passa alla activity mappa
@@ -164,37 +129,32 @@ public class MainActivity extends AppCompatActivity
         });
         aggiornaConteggio.start();
 
-
-        ListView lista = (ListView) findViewById(R.id.listView);
-        Cursor c = cptDatabaseH.getRecordsForList(db);
-
-        lista.setAdapter(new MyCursorAdaper(MainActivity.this, c));
-
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(MainActivity.this, DetailRecordActivity.class);
-                i.putExtra(ITEM_ID, id);
-                startActivity(i);
-            }
-        });
-
-        lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (mActionMode != null) {
-                    return false;
-                }
-
-                // Start the CAB using the ActionMode.Callback defined above
-                mActionMode = startActionMode(mActionModeCallback);
-                view.setSelected(true);
-                return true;
-            }
-        });
-
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_contextual_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.view_on_map:
+                try {
+                    Cursor c = qhlp.getRecordById(info.id);
+                }
+                catch(Exception e) {
+                    Log.e("MobAND", e.getMessage());
+                }
+
+                return true;
+        }
+        return false;
+    }
 
     @Override
     public void onBackPressed() {
