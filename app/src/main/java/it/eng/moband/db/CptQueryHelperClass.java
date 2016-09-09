@@ -46,8 +46,8 @@ public class CptQueryHelperClass {
         if (c != null)
             if (c.getCount() == 1)
             {
-                CptRecord rec = new CptRecord();
-                rec.extractRecord(c);
+                c.moveToFirst();
+                CptRecord rec = getCurrentCptRecord(c);
                 return  rec;
             }
         return  null;
@@ -76,24 +76,38 @@ public class CptQueryHelperClass {
 
 
 
-    public CptRecord getCurrentCptRecord(Cursor c)
-    {
-        CptRecord cr = null;
-        if (c != null)
-        {
-            Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti._ID)));
-            Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_SECT)));
-            Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_YEAR)));
-            Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_MONTH)));
-            Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_DAY)));
-            Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_HOUR)));
-            Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_MINUTE)));
-            Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA)));
-            Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_MAX)));
+    public CptRecord getCurrentCptRecord(Cursor c) throws NullObjectException, TooManyRecordsException {
+        if (c==null)
+            throw new NullObjectException("Cursor null - it's impossible to extract any record data.");
 
+        CptRecord cr = new CptRecord();
+
+        if (c.getCount() > 0)
+        {
+
+            cr.setID( c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti._ID)));
+
+            cr.setSECT( c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_SECT)));
+            cr.setREFNAME( c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_REFNAME)));
+
+            cr.setYEAR( c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_YEAR)));
+            cr.setMONTH( c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_MONTH)));
+            cr.setDAY( c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_DAY)));
+            cr.setHOUR( c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_HOUR)));
+            cr.setMINUTE( c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_MINUTE)));
+
+            cr.setEPICENTRAL_AREA( c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA)));
+            cr.setINTENSITY_MAX( c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_MAX)));
+            cr.setINTENSITY_DEF( c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_DEF)));
+
+            cr.setLATITUDE( c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE)));
+            cr.setLONGITUDE( c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LONGITUDE)));
+            cr.setDEPTH( c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_DEPTH)));
         }
         return  cr;
     }
+
+
 
 
     public long debugAllRecords() {

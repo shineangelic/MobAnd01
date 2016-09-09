@@ -31,34 +31,6 @@ public class CptRecord implements Serializable{
     private String LONGITUDE = "LonDef";
     private String DEPTH = "DepDef";
 
-    public void extractRecord(Cursor c) throws NullObjectException, TooManyRecordsException {
-        if (c==null)
-            throw new NullObjectException("Cursor null - it's impossible to extract a record data.");
-
-        if (c.getCount() != 1)
-            throw new TooManyRecordsException("Too many recortds found in Cursor \"c\" - ambiguity of data extraction.");
-
-        c.moveToFirst();
-
-        ID = c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti._ID));
-
-        SECT = c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_SECT));
-        REFNAME = c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_REFNAME));
-
-        YEAR = c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_YEAR));
-        MONTH = c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_MONTH));
-        DAY = c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_DAY));
-        HOUR = c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_HOUR));
-        MINUTE = c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_MINUTE));
-
-        EPICENTRAL_AREA = c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA));
-        INTENSITY_MAX = c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_MAX));
-        INTENSITY_DEF = c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_DEF));
-
-        LATITUDE = c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE));
-        LONGITUDE = c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LONGITUDE));
-        DEPTH = c.getString( c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_DEPTH));
-    }
 
     public String getID(){return ID;}
     public void setID(String value){ID=value;}
