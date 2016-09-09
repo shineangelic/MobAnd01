@@ -1,5 +1,6 @@
 package it.eng.moband;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        new SimpleEula(this).show();
         //toolbar dell'applicazione, chiamata 'standard'
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -202,6 +203,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
             Intent mostraSlides = new Intent(getApplicationContext(), SlidesActivity.class);
             startActivity(mostraSlides);
+        } else if (id == R.id.nav_manage) {
+            Intent intent = new Intent(MainActivity.this,OpzioniActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_manage) {
 
         }
