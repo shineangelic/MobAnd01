@@ -1,14 +1,11 @@
 package it.eng.moband;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
-import android.view.ActionMode;
-import android.view.ActionMode.Callback;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -27,6 +24,7 @@ import android.widget.TextView;
 
 import java.io.IOException;
 
+import it.eng.moband.Constants.CptConstants;
 import it.eng.moband.db.CptQueryHelperClass;
 import it.eng.moband.listdetail.DetailRecordActivity;
 import it.eng.moband.db.CptHelperClass;
@@ -40,8 +38,7 @@ public class MainActivity extends AppCompatActivity
 
     private SQLiteDatabase db;
     private CptHelperClass cptDatabaseH;
-    private CptQueryHelperClass qhlp;
-    private static final String ITEM_ID = "ITEM_ID";
+    private CptQueryHelperClass cptQueryHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +76,7 @@ public class MainActivity extends AppCompatActivity
         db = cptDatabaseH.getWritableDatabase();
         try {
             cptDatabaseH.preparaDbCopiato();
-            qhlp = new CptQueryHelperClass(db);
+            cptQueryHelper = new CptQueryHelperClass(db);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,7 +89,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(MainActivity.this, DetailRecordActivity.class);
-                i.putExtra(ITEM_ID, id);
+                i.putExtra(CptConstants.ITEM_ID, id);
                 startActivity(i);
             }
         });
@@ -150,7 +147,7 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.view_on_map:
                 try {
-                    Cursor c = qhlp.getRecordById(info.id);
+                    Cursor c = cptQueryHelper.getRecordById(info.id);
                 }
                 catch(Exception e) {
                     Log.e("MobAND", e.getMessage());
@@ -164,7 +161,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onQueryTextSubmit(String query) {
         try {
-            Cursor c = qhlp.getRecordByArea((query != null ? '%' + query + '%' : "@@@@"));
+            Cursor c = cptQueryHelper.getRecordByArea((query != null ? '%' + query + '%' : "@@@@"));
             ListView v = (ListView) findViewById(R.id.listView);
             v.setAdapter(new MyCursorAdaper(MainActivity.this,c));
             return true;
@@ -178,7 +175,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onQueryTextChange(String query) {
         try {
-            Cursor c = qhlp.getRecordByArea((query != null ? '%' + query + '%' : "@@@@"));
+            Cursor c = cptQueryHelper.getRecordByArea((query != null ? '%' + query + '%' : "@@@@"));
             ListView v = (ListView) findViewById(R.id.listView);
             v.setAdapter(new MyCursorAdaper(MainActivity.this,c));
             return true;
