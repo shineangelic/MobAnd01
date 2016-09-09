@@ -23,6 +23,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -126,6 +127,7 @@ public class ItalyMapActivity extends AppCompatActivity
 
 
                                 if(latitudine!=null && !latitudine.equals("") && longitudine!=null && !longitudine.equals("")){
+                                        //Circle circle = mGoogleMap.addCircle();
                                         MarkerOptions markerOptions = new MarkerOptions();
                                         LatLng latLng = new LatLng(Double.parseDouble(latitudine),Double.parseDouble(longitudine));
 
