@@ -18,3 +18,5 @@ https://creativecommons.org/licenses/by-nc-sa/4.0/
 
 Questo è un software didattico
 Riproduzione vietata
+
+![Alt text](/Screen.png "Schermata dell'applicazione")

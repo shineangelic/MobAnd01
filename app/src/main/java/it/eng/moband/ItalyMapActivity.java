@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
@@ -24,6 +25,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -67,10 +69,16 @@ public class ItalyMapActivity extends AppCompatActivity
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         checkLocationPermission();
                 }
+
+
+
+
+
                 // Obtain the SupportMapFragment and get notified when the map is ready to be used.
                 SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.map);
                 mapFragment.getMapAsync(this);
+
         }
 
 
@@ -128,36 +136,52 @@ public class ItalyMapActivity extends AppCompatActivity
 
                                 if(latitudine!=null && !latitudine.equals("") && longitudine!=null && !longitudine.equals("")){
                                         //Circle circle = mGoogleMap.addCircle();
+
+
+
+
                                         MarkerOptions markerOptions = new MarkerOptions();
                                         LatLng latLng = new LatLng(Double.parseDouble(latitudine),Double.parseDouble(longitudine));
 
+                                        /*Circle circle = mGoogleMap.addCircle(new CircleOptions()
+                                                .center(new LatLng(-33.87365, 151.20689))
+                                                .radius(10000)
+                                                .strokeColor(Color.RED)
+                                                .fillColor(Color.BLUE));*/
+
                                         markerOptions.position(latLng);
                                         markerOptions.title(cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA)));
-                                        String id_terr = cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti._ID));
+                                        final long id_terr = Long.parseLong(cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti._ID)));
 
-                                       // mGoogleMap.setOnMarkerClickListener(ItalyMapActivity.this);
+                                        // mGoogleMap.setOnMarkerClickListener(ItalyMapActivity.this);
+                                        /*mGoogleMap.setOnCircleClickListener(new GoogleMap.OnCircleClickListener(circle)
+                                                                            {
 
-                                        mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
-                                        {
-
-                                                @Override
-                                                public boolean onMarkerClick(Marker arg0) {
-
-                                                      Intent dettaglioView = new Intent(ItalyMapActivity.this,DetailRecordActivity.class);
-                                                        dettaglioView.putExtra("ITEM_ID",arg0.getSnippet());
-                                                        startActivity(dettaglioView);
+                                                                            }*/
 
 
-                                                        //Toast.makeText(ItalyMapActivity.this, arg0.getSnippet(), Toast.LENGTH_SHORT).show();// display toast
-                                                        return true;
+                                                mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
+                                                {
 
-                                                }
+                                                        @Override
+                                                        public boolean onMarkerClick(Marker arg0) {
 
-                                        });
+
+                                                                Intent i = new Intent(ItalyMapActivity.this, DetailRecordActivity.class);
+                                                                i.putExtra("ITEM_ID", id_terr);
+                                                                startActivity(i);
+
+
+                                                                //Toast.makeText(ItalyMapActivity.this, arg0.getSnippet(), Toast.LENGTH_SHORT).show();// display toast
+                                                                return true;
+
+                                                        }
+
+                                                });
 
                                 /*markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));*/
                                         mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
-                                        mCurrLocationMarker.setSnippet(id_terr);
+
                                         mGoogleMap.setMinZoomPreference(5);
 
 
