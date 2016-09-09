@@ -16,8 +16,6 @@ import it.eng.moband.exceptions.TooManyRecordsException;
 public class CptRecord implements Serializable{
     public CptRecord() {}
 
-    //TODO questa classe non è encapsulata. Rendere private le variabili
-    //ed aggiungere metodi getter/setter
     private String ID = "_ID";
     private String SECT = "Sect";
     private String REFNAME = "MainRef";
@@ -106,14 +104,13 @@ public class CptRecord implements Serializable{
 
 
 
-    //TODO questo metodo dovrebbe tornare Date pura, da formattare successivamente sulla view
     public Date getDateTimeQuake() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); // creo l'oggetto
         String dtQuake =  YEAR + "/" + MONTH + "/" + DAY + " " + HOUR + ":" + MINUTE + ":00";
         return sdf.parse(dtQuake);
     }
 
-    //TODO come sopra
+
     public Date getDateQuake() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd"); // creo l'oggetto
         String dtQuake =  YEAR + "/" + MONTH + "/" + DAY;
