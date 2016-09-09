@@ -64,12 +64,6 @@ public class CptQueryHelperClass {
         };
 
         Cursor data = mDB.query(true, CptContract.CatalogoParametricoTerremoti.TABLE_NAME, columns, null, null, null, null, CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA, null);
-
-       /* data.moveToFirst();
-        for (int i=0; i<data.getCount(); i++) {
-            Log.i("MOBAND", "Epicentro:" + data.getString(6) + ", Magnitudo Max: " + data.getString(8));
-            data.moveToNext();
-        }*/
         return data;
     }
 
@@ -105,5 +99,32 @@ public class CptQueryHelperClass {
         Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA)));
         Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_MAX)));
     }
+
+    public Cursor getRecordByArea(String inputText) throws Exception {
+
+        String[] columns = new String[]{
+                CptContract.CatalogoParametricoTerremoti._ID,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_SECT,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_REFNAME,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_YEAR,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_MONTH,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_DAY,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_MINUTE,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_DEF,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_MAX,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LONGITUDE,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY
+        };
+
+        Cursor c = mDB.query(CptContract.CatalogoParametricoTerremoti.TABLE_NAME, columns, CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA + " LIKE ?", new String[]{inputText}, null, null, CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA, null);
+        if (c != null) {
+            c.moveToFirst();
+        }
+        return c;
+
+    }
+
 
 }
