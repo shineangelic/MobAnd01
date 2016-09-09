@@ -125,7 +125,12 @@ public class CptQueryHelperClass {
                 CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY
         };
 
-        Cursor c = mDB.query(CptContract.CatalogoParametricoTerremoti.TABLE_NAME, columns, CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA + " LIKE ?", new String[]{inputText}, null, null, CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA, null);
+        Cursor c = mDB.query(CptContract.CatalogoParametricoTerremoti.TABLE_NAME, columns,
+                CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY + " IS NOT NULL AND " +
+                        CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY + " != '' AND " +
+                        CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE + " IS NOT NULL AND "+
+                        CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE + " != '' AND " +
+                        CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA + " LIKE ?", new String[]{inputText}, null, null, CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA, null);
         if (c != null) {
             c.moveToFirst();
         }

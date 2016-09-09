@@ -115,12 +115,6 @@ public class ItalyMapActivity extends AppCompatActivity
 
                 //TODO caricamento asincrono, lanciato subito dopo mapFragment.getMapAsync(this);
                 cptDatabaseH = new CptHelperClass(this);
-                try {
-                        cptDatabaseH.preparaDbCopiato();
-                } catch (IOException e) {
-                        e.printStackTrace();
-                }
-
                 db = cptDatabaseH.getReadableDatabase();
                 //TODO select * qui è devastante. Scrivere query con projection corretta in QueryHelperClass
 

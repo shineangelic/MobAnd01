@@ -73,9 +73,9 @@ public class MainActivity extends AppCompatActivity
 
         //ottieni DB copiato
         cptDatabaseH = new CptHelperClass(this);
-        db = cptDatabaseH.getWritableDatabase();
         try {
             cptDatabaseH.preparaDbCopiato();
+            db = cptDatabaseH.getWritableDatabase();
             cptQueryHelper = new CptQueryHelperClass(db);
         } catch (IOException e) {
             e.printStackTrace();
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         SearchView searchView = (SearchView) findViewById(R.id.filtroLista);
-        searchView.setIconifiedByDefault(false);
+        searchView.setIconifiedByDefault(true);
         searchView.setOnQueryTextListener(this);
     }
 
@@ -147,7 +147,9 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.view_on_map:
                 try {
-                    Cursor c = cptQueryHelper.getRecordById(info.id);
+                    Intent i = new Intent(MainActivity.this, SingleEventMapActivity.class);
+                    i.putExtra(CptConstants.ITEM_ID, Long.valueOf(info.id).longValue());
+                    startActivity(i);
                 }
                 catch(Exception e) {
                     Log.e("MobAND", e.getMessage());
