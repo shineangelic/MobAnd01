@@ -44,23 +44,23 @@ public class DetailRecordActivity extends AppCompatActivity {
         OpenDB();
         if (idRecord > 0)
         {
-            CptQueryHelperClass qhc = new CptQueryHelperClass(db);
-
-            Log.d("DetailRecordActivity", "Dal DB recupera il record con idRecord = " + idRecord);
-            Cursor c = getRecordDetailQuakeAsCursor(idRecord);
-
-
-            if (c != null) {
-                CptRecord cr = new CptRecord();
-                try {
-                    cr.extractRecord(c); // *** in questo punto si possiede il record da renderizzare
-                } catch (NullObjectException e) {
-                    e.printStackTrace();
-                } catch (TooManyRecordsException e) {
-                    e.printStackTrace();
-                }
-                renderDetailRecord(cr);
+            CptQueryHelperClass qhlp = new CptQueryHelperClass(db);
+            CptRecord quake = null;
+            try {
+                quake = qhlp.getRecordDaoById(idRecord);
+            } catch (NullObjectException e) {
+                e.printStackTrace();
+            } catch (TooManyRecordsException e) {
+                e.printStackTrace();
             }
+
+            // *** in questo punto si possiede il record da renderizzare
+
+            if (quake != null)
+                renderDetailRecord(quake);
+            else
+                finish();
+
         }
 
     }
@@ -68,21 +68,6 @@ public class DetailRecordActivity extends AppCompatActivity {
 
 
 
-    private Cursor getRecordDetailQuakeAsCursor(long idRecord)
-    {
-        CptQueryHelperClass qhc = new CptQueryHelperClass(db);
-
-        Log.d("DetailRecordActivity", "Dal DB recupera il record con idRecord = " + idRecord);
-        Cursor c = null;
-        try {
-            c = qhc.getRecordById(idRecord);
-        }
-        catch (NullObjectException ex)
-        {
-            Log.e(CptConstants.LOG_TAG ,"il cursore non ha restituito record / il DB è vuoto.");
-        }
-        return  c;
-    }
 
     private void OpenDB()
     {
@@ -96,6 +81,8 @@ public class DetailRecordActivity extends AppCompatActivity {
         Log.d("DetailRecordActivity", "Apre db.");
         db = cptDatabaseH.getWritableDatabase();
     }
+
+
 
 
 
