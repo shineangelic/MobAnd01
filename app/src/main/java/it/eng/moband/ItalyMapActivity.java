@@ -53,6 +53,7 @@ public class ItalyMapActivity extends AppCompatActivity
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
+    Circle mCurrLocationCircle;
     private SQLiteDatabase db;
     private CptHelperClass cptDatabaseH;
 
@@ -144,14 +145,21 @@ public class ItalyMapActivity extends AppCompatActivity
             do {
                 String latitudine = cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE)).replace(",", ".");
                 String longitudine = cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LONGITUDE)).replace(",", ".");
+                String magnitudo = cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY)).replace(",", ".");
 
 
                 if (latitudine != null && !latitudine.equals("") && longitudine != null && !longitudine.equals("")) {
                     //Circle circle = mGoogleMap.addCircle();
 
 
-                    MarkerOptions markerOptions = new MarkerOptions();
+                   // MarkerOptions markerOptions = new MarkerOptions();
                     LatLng latLng = new LatLng(Double.parseDouble(latitudine), Double.parseDouble(longitudine));
+
+                    CircleOptions circleOptions = new CircleOptions();
+                    circleOptions.center(latLng);
+                    circleOptions.radius(Double.valueOf(magnitudo).doubleValue());
+                    circleOptions.strokeColor(Color.RED);
+                    circleOptions.fillColor(Color.BLUE);
 
                                         /*Circle circle = mGoogleMap.addCircle(new CircleOptions()
                                                 .center(new LatLng(-33.87365, 151.20689))
@@ -159,9 +167,9 @@ public class ItalyMapActivity extends AppCompatActivity
                                                 .strokeColor(Color.RED)
                                                 .fillColor(Color.BLUE));*/
 
-                    markerOptions.position(latLng);
+                    //markerOptions.position(latLng);
 
-                    markerOptions.title(cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA)));
+                    //markerOptions.title(cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA)));
                     final long id_terr = Long.parseLong(cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti._ID)));
 
                     // mGoogleMap.setOnMarkerClickListener(ItalyMapActivity.this);
@@ -174,8 +182,11 @@ public class ItalyMapActivity extends AppCompatActivity
 
 
                                 /*markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));*/
-                    mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
-                    mCurrLocationMarker.setTag(Long.parseLong(cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti._ID))));
+                   // mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+                    //mCurrLocationMarker.setTag(Long.parseLong(cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti._ID))));
+
+                    mCurrLocationCircle = mGoogleMap.addCircle(circleOptions);
+                    //mCurrLocationCircle.setTag(Long.parseLong(cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti._ID))));
                     ;
                     mGoogleMap.setMinZoomPreference(5);
 
@@ -185,7 +196,7 @@ public class ItalyMapActivity extends AppCompatActivity
 
             } while (cursor.moveToNext());
 
-            mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        /*    mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
                 @Override
                 public boolean onMarkerClick(Marker arg0) {
@@ -199,7 +210,7 @@ public class ItalyMapActivity extends AppCompatActivity
 
                 }
 
-            });
+            });*/
         }
     }
 
