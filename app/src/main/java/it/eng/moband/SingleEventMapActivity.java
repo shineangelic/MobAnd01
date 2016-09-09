@@ -42,11 +42,12 @@ public class SingleEventMapActivity extends FragmentActivity implements OnMapRea
             //TODO caricamento asincrono, lanciato subito dopo mapFragment.getMapAsync(this);
             cptDatabaseH = new CptHelperClass(this);
             try {
-                cptDatabaseH.preparaDbCopiato();
-            } catch (IOException e) {
+                db = cptDatabaseH.getReadableDatabase();
+                cptQueryHelperClass = new CptQueryHelperClass(db);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            db = cptDatabaseH.getReadableDatabase();
+
             try {
                 Cursor cursor = cptQueryHelperClass.getRecordById(id_terr);
 
