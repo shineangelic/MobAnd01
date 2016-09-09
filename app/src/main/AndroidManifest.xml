@@ -38,11 +38,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-
         <activity
             android:name=".listdetail.DetailRecordActivity"
             android:label="@string/title_activity_italy_map" />
-
         <activity
             android:name=".ItalyMapActivity"
             android:label="@string/title_activity_italy_map" />
@@ -53,6 +51,9 @@
         <activity
             android:name=".OpzioniActivity"
             android:label="@string/opzioni" />
+        <activity
+            android:name=".SingleEventMapActivity"
+            android:label="@string/title_activity_single_event_map"></activity>
     </application>
 
 </manifest>

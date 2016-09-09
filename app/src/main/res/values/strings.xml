@@ -12,5 +12,5 @@
     <string name="title_activity_detail">Dettaglio terremoto</string>
     <string name="updates">Updates: Versione 1.0.</string>
     <string name="eula">Eula: Questo software costituisce il primo rilascio a scopo didattico di questa App, che consente la ricerca di tutti gli eventi tellurici che sono occorsi sul territorio italiano sino ad oggi.</string>
-
+    <string name="title_activity_single_event_map">Map</string>
 </resources>

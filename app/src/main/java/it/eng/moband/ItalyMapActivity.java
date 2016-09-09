@@ -69,10 +69,16 @@ public class ItalyMapActivity extends AppCompatActivity
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         checkLocationPermission();
                 }
+
+
+
+
+
                 // Obtain the SupportMapFragment and get notified when the map is ready to be used.
                 SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.map);
                 mapFragment.getMapAsync(this);
+
         }
 
 
