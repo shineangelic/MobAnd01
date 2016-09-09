@@ -13,4 +13,21 @@
     <string name="updates">Updates: Versione 1.0.</string>
     <string name="eula">Eula: Questo software costituisce il primo rilascio a scopo ed uso didattico di questa App, che consente la ricerca di tutti gli eventi tellurici che sono occorsi sul territorio italiano sino ad oggi.</string>
     <string name="title_activity_single_event_map">Map</string>
+
+    <string name="title_slides">Slides</string>
+    <string name="cardText1">Intro</string>
+    <string name="cardText2">Hello World</string>
+    <string name="cardText3">Fondamenti UI</string>
+    <string name="cardText4">Supporto Devices</string>
+    <string name="cardText5">Activity LifeCycle</string>
+    <string name="cardText6">Interazioni con altre App</string>
+    <string name="cardText7">Support Lib</string>
+    <string name="cardText8">Fragments</string>
+    <string name="cardText9">Material Design</string>
+    <string name="cardText10">Salvare i dati</string>
+    <string name="cardText11">SQLite Database</string>
+    <string name="cardText12">Lavorare con i permessi</string>
+    <string name="cardText13">Samples: RecyclerView</string>
+    <string name="cardText14">Pubblicare su GPlay</string>
+
 </resources>
