@@ -45,97 +45,87 @@ public class ItalyMapActivity extends AppCompatActivity
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
-        GoogleMap mGoogleMap;
+    GoogleMap mGoogleMap;
 
-        SupportMapFragment mapFrag;
-        LocationRequest mLocationRequest;
-        GoogleApiClient mGoogleApiClient;
-        Location mLastLocation;
-        Marker mCurrLocationMarker;
-        private SQLiteDatabase db;
-        private CptHelperClass cptDatabaseH;
-
-
-        private TextView mPlaceDetailsText;
-
-        private TextView mPlaceAttribution;
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState)
-        {
-
-                super.onCreate(savedInstanceState);
-                setContentView(R.layout.activity_italy_map);
-                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        checkLocationPermission();
-                }
+    SupportMapFragment mapFrag;
+    LocationRequest mLocationRequest;
+    GoogleApiClient mGoogleApiClient;
+    Location mLastLocation;
+    Marker mCurrLocationMarker;
+    private SQLiteDatabase db;
+    private CptHelperClass cptDatabaseH;
 
 
+    private TextView mPlaceDetailsText;
 
+    private TextView mPlaceAttribution;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
 
-                // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-                SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                        .findFragmentById(R.id.map);
-                mapFragment.getMapAsync(this);
-
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_italy_map);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkLocationPermission();
         }
 
 
-        @Override
-        public void onPause() {
-                super.onPause();
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
-                //stop location updates when Activity is no longer active
-                if (mGoogleApiClient != null) {
-                        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-                }
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        //stop location updates when Activity is no longer active
+        if (mGoogleApiClient != null) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mGoogleMap = googleMap;
+        //mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
+        //Initialize Google Play Services
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                buildGoogleApiClient();
+                mGoogleMap.setMyLocationEnabled(true);
+            }
+        } else {
+            buildGoogleApiClient();
+            mGoogleMap.setMyLocationEnabled(true);
+
         }
 
-        @Override
-        public void onMapReady(GoogleMap googleMap)
-        {
-                mGoogleMap=googleMap;
-                //mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        //TODO caricamento asincrono, lanciato subito dopo mapFragment.getMapAsync(this);
+        cptDatabaseH = new CptHelperClass(this);
+        db = cptDatabaseH.getReadableDatabase();
 
-                //Initialize Google Play Services
-                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (ContextCompat.checkSelfPermission(this,
-                                android.Manifest.permission.ACCESS_FINE_LOCATION)
-                                == PackageManager.PERMISSION_GRANTED) {
-                                buildGoogleApiClient();
-                                mGoogleMap.setMyLocationEnabled(true);
-                        }
-                }
-                else {
-                        buildGoogleApiClient();
-                        mGoogleMap.setMyLocationEnabled(true);
-
-                }
-
-                //TODO caricamento asincrono, lanciato subito dopo mapFragment.getMapAsync(this);
-                cptDatabaseH = new CptHelperClass(this);
-                db = cptDatabaseH.getReadableDatabase();
-                //TODO select * qui è devastante. Scrivere query con projection corretta in QueryHelperClass
+        //String selectQuery = "SELECT  * FROM " + CptContract.CatalogoParametricoTerremoti.TABLE_NAME;
+        //Cursor cursor = db.rawQuery(selectQuery, null);
+        final Cursor cursor = cptDatabaseH.getRecordsForList(db);
+        if (cursor.moveToFirst()) {
+            do {
+                String latitudine = cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE)).replace(",", ".");
+                String longitudine = cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LONGITUDE)).replace(",", ".");
 
 
-                //String selectQuery = "SELECT  * FROM " + CptContract.CatalogoParametricoTerremoti.TABLE_NAME;
-                //Cursor cursor = db.rawQuery(selectQuery, null);
-                Cursor cursor = cptDatabaseH.getRecordsForList(db);
-                if (cursor.moveToFirst()) {
-                        do {
-                                String latitudine = cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LATITUDE)).replace(",",".");
-                                String longitudine = cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_LONGITUDE)).replace(",",".");
+                if (latitudine != null && !latitudine.equals("") && longitudine != null && !longitudine.equals("")) {
+                    //Circle circle = mGoogleMap.addCircle();
 
 
-                                if(latitudine!=null && !latitudine.equals("") && longitudine!=null && !longitudine.equals("")){
-                                        //Circle circle = mGoogleMap.addCircle();
-
-
-
-
-                                        MarkerOptions markerOptions = new MarkerOptions();
-                                        LatLng latLng = new LatLng(Double.parseDouble(latitudine),Double.parseDouble(longitudine));
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    LatLng latLng = new LatLng(Double.parseDouble(latitudine), Double.parseDouble(longitudine));
 
                                         /*Circle circle = mGoogleMap.addCircle(new CircleOptions()
                                                 .center(new LatLng(-33.87365, 151.20689))
@@ -143,171 +133,172 @@ public class ItalyMapActivity extends AppCompatActivity
                                                 .strokeColor(Color.RED)
                                                 .fillColor(Color.BLUE));*/
 
-                                        markerOptions.position(latLng);
-                                        markerOptions.title(cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA)));
-                                        final long id_terr = Long.parseLong(cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti._ID)));
+                    markerOptions.position(latLng);
 
-                                        // mGoogleMap.setOnMarkerClickListener(ItalyMapActivity.this);
+                    markerOptions.title(cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA)));
+                    final long id_terr = Long.parseLong(cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti._ID)));
+
+                    // mGoogleMap.setOnMarkerClickListener(ItalyMapActivity.this);
                                         /*mGoogleMap.setOnCircleClickListener(new GoogleMap.OnCircleClickListener(circle)
                                                                             {
 
                                                                             }*/
 
 
-                                                mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
-                                                {
 
-                                                        @Override
-                                                        public boolean onMarkerClick(Marker arg0) {
-
-
-                                                                Intent i = new Intent(ItalyMapActivity.this, DetailRecordActivity.class);
-                                                                i.putExtra("ITEM_ID", id_terr);
-                                                                startActivity(i);
-
-
-                                                                //Toast.makeText(ItalyMapActivity.this, arg0.getSnippet(), Toast.LENGTH_SHORT).show();// display toast
-                                                                return true;
-
-                                                        }
-
-                                                });
 
                                 /*markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));*/
-                                        mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
-
-                                        mGoogleMap.setMinZoomPreference(5);
-
-
-                                }
-
-
-                        } while (cursor.moveToNext());
+                    mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+                    mCurrLocationMarker.setTag(Long.parseLong(cursor.getString(cursor.getColumnIndex(CptContract.CatalogoParametricoTerremoti._ID))));
+                    ;
+                    mGoogleMap.setMinZoomPreference(5);
 
 
                 }
-        }
 
-        protected synchronized void buildGoogleApiClient() {
-                mGoogleApiClient = new GoogleApiClient.Builder(this)
-                        .addConnectionCallbacks(this)
-                        .addOnConnectionFailedListener(this)
-                        .addApi(LocationServices.API)
-                        .build();
-                mGoogleApiClient.connect();
-        }
 
-        @Override
-        public void onConnected(Bundle bundle) {
-                mLocationRequest = new LocationRequest();
-                mLocationRequest.setInterval(1000);
-                mLocationRequest.setFastestInterval(1000);
-                mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-                if (ContextCompat.checkSelfPermission(this,
-                        android.Manifest.permission.ACCESS_FINE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED) {
-                        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-                }
-        }
+            } while (cursor.moveToNext());
 
-        @Override
-        public void onConnectionSuspended(int i) {}
+            mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
-        @Override
-        public void onConnectionFailed(ConnectionResult connectionResult) {}
+                @Override
+                public boolean onMarkerClick(Marker arg0) {
+                    Intent i = new Intent(ItalyMapActivity.this, DetailRecordActivity.class);
+                    i.putExtra("ITEM_ID",(Long) arg0.getTag());
+                    startActivity(i);
 
-        @Override
-        public void onLocationChanged(Location location)
-        {
-                mLastLocation = location;
-                if (mCurrLocationMarker != null) {
-                        mCurrLocationMarker.remove();
+
+                    //Toast.makeText(ItalyMapActivity.this, arg0.getSnippet(), Toast.LENGTH_SHORT).show();// display toast
+                    return true;
+
                 }
 
-                //Place current location marker
-                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(latLng);
-                markerOptions.title("Posizione Attuale");
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+            });
+        }
+    }
 
-                //move map camera
-                mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        mGoogleApiClient.connect();
+    }
 
-                //stop location updates
-                if (mGoogleApiClient != null) {
-                        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-                }
+    @Override
+    public void onConnected(Bundle bundle) {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(1000);
+        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        mLastLocation = location;
+        if (mCurrLocationMarker != null) {
+            mCurrLocationMarker.remove();
         }
 
-        public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-        public boolean checkLocationPermission(){
-                if (ContextCompat.checkSelfPermission(this,
-                        android.Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
+        //Place current location marker
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng);
+        markerOptions.title("Posizione Attuale");
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+        mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
 
-                        // Should we show an explanation?
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                                android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+        //move map camera
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(11));
 
-                                // Show an expanation to the user *asynchronously* -- don't block
-                                // this thread waiting for the user's response! After the user
-                                // sees the explanation, try again to request the permission.
+        //stop location updates
+        if (mGoogleApiClient != null) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        }
+    }
 
-                                //Prompt the user once explanation has been shown
-                                ActivityCompat.requestPermissions(this,
-                                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                                        MY_PERMISSIONS_REQUEST_LOCATION);
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+                //Prompt the user once explanation has been shown
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
 
 
-                        } else {
-                                // No explanation needed, we can request the permission.
-                                ActivityCompat.requestPermissions(this,
-                                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                                        MY_PERMISSIONS_REQUEST_LOCATION);
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    if (ContextCompat.checkSelfPermission(this,
+                            android.Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+
+                        if (mGoogleApiClient == null) {
+                            buildGoogleApiClient();
                         }
-                        return false;
+                        mGoogleMap.setMyLocationEnabled(true);
+                    }
+
                 } else {
-                        return true;
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(this, "Permesso Negato", Toast.LENGTH_LONG).show();
                 }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
         }
-
-        @Override
-        public void onRequestPermissionsResult(int requestCode,
-                                               String permissions[], int[] grantResults) {
-                switch (requestCode) {
-                        case MY_PERMISSIONS_REQUEST_LOCATION: {
-                                // If request is cancelled, the result arrays are empty.
-                                if (grantResults.length > 0
-                                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                                        // permission was granted, yay! Do the
-                                        // contacts-related task you need to do.
-                                        if (ContextCompat.checkSelfPermission(this,
-                                                android.Manifest.permission.ACCESS_FINE_LOCATION)
-                                                == PackageManager.PERMISSION_GRANTED) {
-
-                                                if (mGoogleApiClient == null) {
-                                                        buildGoogleApiClient();
-                                                }
-                                                mGoogleMap.setMyLocationEnabled(true);
-                                        }
-
-                                } else {
-
-                                        // permission denied, boo! Disable the
-                                        // functionality that depends on this permission.
-                                        Toast.makeText(this, "Permesso Negato", Toast.LENGTH_LONG).show();
-                                }
-                                return;
-                        }
-
-                        // other 'case' lines to check for other
-                        // permissions this app might request
-                }
-        }
+    }
 
 
 }
