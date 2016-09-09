@@ -5,5 +5,5 @@ package it.eng.moband.Constants;
  */
 public class CptConstants {
     public final static String LOG_TAG = "MobAnd01";
-    public final static String ITEM_ID = "ITEM_ID";
+    public static final String ITEM_ID = "ITEM_ID";
 }

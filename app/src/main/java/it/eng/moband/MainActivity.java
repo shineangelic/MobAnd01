@@ -1,14 +1,11 @@
 package it.eng.moband;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
-import android.view.ActionMode;
-import android.view.ActionMode.Callback;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -18,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
@@ -26,6 +24,7 @@ import android.widget.TextView;
 
 import java.io.IOException;
 
+import it.eng.moband.Constants.CptConstants;
 import it.eng.moband.db.CptQueryHelperClass;
 import it.eng.moband.listdetail.DetailRecordActivity;
 import it.eng.moband.db.CptHelperClass;
@@ -34,13 +33,12 @@ import it.eng.moband.db.CptHelperClass;
  * Launcher dell'app, Activity che parte con l'avvio della app
  */
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+                   SearchView.OnQueryTextListener {
 
     private SQLiteDatabase db;
     private CptHelperClass cptDatabaseH;
-    private CptQueryHelperClass qhlp;
-    private static final String ITEM_ID = "ITEM_ID";
-    private ActionMode mActionMode = null;
+    private CptQueryHelperClass cptQueryHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +76,7 @@ public class MainActivity extends AppCompatActivity
         db = cptDatabaseH.getWritableDatabase();
         try {
             cptDatabaseH.preparaDbCopiato();
-            qhlp = new CptQueryHelperClass(db);
+            cptQueryHelper = new CptQueryHelperClass(db);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -91,11 +89,14 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(MainActivity.this, DetailRecordActivity.class);
-                i.putExtra(ITEM_ID, id);
+                i.putExtra(CptConstants.ITEM_ID, id);
                 startActivity(i);
             }
         });
 
+        SearchView searchView = (SearchView) findViewById(R.id.filtroLista);
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(this);
     }
 
     /**
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.view_on_map:
                 try {
-                    Cursor c = qhlp.getRecordById(info.id);
+                    Cursor c = cptQueryHelper.getRecordById(info.id);
                 }
                 catch(Exception e) {
                     Log.e("MobAND", e.getMessage());
@@ -156,6 +157,35 @@ public class MainActivity extends AppCompatActivity
         }
         return false;
     }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        try {
+            Cursor c = cptQueryHelper.getRecordByArea((query != null ? '%' + query + '%' : "@@@@"));
+            ListView v = (ListView) findViewById(R.id.listView);
+            v.setAdapter(new MyCursorAdaper(MainActivity.this,c));
+            return true;
+        }
+        catch(Exception e){
+            Log.e("MobAND", e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        try {
+            Cursor c = cptQueryHelper.getRecordByArea((query != null ? '%' + query + '%' : "@@@@"));
+            ListView v = (ListView) findViewById(R.id.listView);
+            v.setAdapter(new MyCursorAdaper(MainActivity.this,c));
+            return true;
+        }
+        catch(Exception e){
+            Log.e("MobAND", e.getMessage());
+            return false;
+        }
+    }
+
 
     @Override
     public void onBackPressed() {
