@@ -18,7 +18,7 @@
         android:background="@color/colorPrimary"
         android:gravity="center"
         android:textColor="@android:color/white"
-        android:textSize="45dp"
+        android:textSize="45sp"
         tools:text="Epicentro" />
 
 
@@ -31,18 +31,19 @@
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp">
 
                 <ImageView
                     android:id="@+id/detail_activity_data_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_my_calendar" />
+                    android:src="@drawable/ic_date"
+                    android:alpha="0.6"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/detail_activity_data_label"
@@ -51,8 +52,9 @@
                     android:layout_toRightOf="@id/detail_activity_data_icon"
 
                     android:text="Data:"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:paddingLeft="5dp"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/detail_activity_data"
@@ -60,24 +62,26 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/detail_activity_data_label"
                     android:gravity="right"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     tools:text="08/09/2016" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp">
 
                 <ImageView
                     android:id="@+id/detail_activity_ora_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_recent_history" />
+                    android:src="@drawable/ic_time"
+                    android:alpha="0.5"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/detail_activity_ora_label"
@@ -85,8 +89,9 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/detail_activity_ora_icon"
                     android:text="Ora:"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:paddingLeft="5dp"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/detail_activity_ora"
@@ -94,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/detail_activity_ora_label"
                     android:gravity="right"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     tools:text="15:00:00" />
             </RelativeLayout>
 
@@ -106,15 +111,25 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/detail_activity_magnitudo_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_magnitude"
+                    android:alpha="0.5"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/detail_activity_magnitudo_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Magnitudo:"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@id/detail_activity_magnitudo_icon"
+                    android:paddingLeft="5dp"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/detail_activity_magnitudo"
@@ -122,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/detail_activity_magnitudo_label"
                     android:gravity="right"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     tools:text="6.0" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
@@ -133,15 +148,25 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/detail_activity_profondita_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_depth"
+                    android:alpha="0.5"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/detail_activity_profondita_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Profondità:"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@id/detail_activity_profondita_icon"
+                    android:paddingLeft="5dp"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/detail_activity_profondita"
@@ -149,7 +174,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/detail_activity_profondita_label"
                     android:gravity="right"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     tools:text="8" />
             </RelativeLayout>
 
@@ -161,15 +186,25 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/detail_activity_latitude_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_lat_log"
+                    android:alpha="0.5"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/detail_activity_latitudine_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Latitudine:"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@id/detail_activity_latitude_icon"
+                    android:paddingLeft="5dp"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/detail_activity_latitudine"
@@ -177,7 +212,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/detail_activity_latitudine_label"
                     android:gravity="right"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     tools:text="76.09876" />
             </RelativeLayout>
 
@@ -189,15 +224,25 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/detail_activity_logitudine_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_lat_log"
+                    android:alpha="0.5"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/detail_activity_longitudine_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Longitudine:"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@id/detail_activity_logitudine_icon"
+                    android:paddingLeft="5dp"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/detail_activity_longitudine"
@@ -205,7 +250,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/detail_activity_longitudine_label"
                     android:gravity="right"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     tools:text="43.12345" />
             </RelativeLayout>
 
