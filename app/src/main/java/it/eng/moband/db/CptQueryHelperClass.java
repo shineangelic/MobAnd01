@@ -22,17 +22,7 @@ public class CptQueryHelperClass {
     }
 
 
-    private void logCurrentRow(Cursor c) {
-        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti._ID)));
-        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_SECT)));
-        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_YEAR)));
-        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_MONTH)));
-        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_DAY)));
-        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_HOUR)));
-        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_MINUTE)));
-        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA)));
-        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_MAX)));
-    }
+
 
     public Cursor getRecordById(long id) throws NullObjectException {
         if (mDB == null)
