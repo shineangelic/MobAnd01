@@ -105,20 +105,20 @@ public class DetailRecordActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.detail_activity_ora)).setText(cr.getTimeQuake());
         ((TextView)findViewById(R.id.detail_activity_magnitudo)).setText(cr.getINTENSITY_DEF());
 
-        if (cr.getDEPTH().trim() != "")
-            ((TextView)findViewById(R.id.detail_activity_profondita)).setText(cr.getDEPTH() + " Km");
-        else
+        if (cr.getDEPTH().trim().equals(new String("")))
             ((TextView)findViewById(R.id.detail_activity_profondita)).setText("n.d.");
-
-        if (cr.getDEPTH().trim() != "")
-            ((TextView)findViewById(R.id.detail_activity_longitudine)).setText(cr.getLONGITUDE() + "°");
         else
+            ((TextView)findViewById(R.id.detail_activity_profondita)).setText(cr.getDEPTH() + " Km");
+
+        if (cr.getLONGITUDE().trim().equals(new String("")))
             ((TextView)findViewById(R.id.detail_activity_longitudine)).setText("n.d.");
-
-        if (cr.getDEPTH().trim() != "")
-            ((TextView)findViewById(R.id.detail_activity_latitudine)).setText(cr.getLATITUDE() + "°");
         else
+            ((TextView)findViewById(R.id.detail_activity_longitudine)).setText(cr.getLONGITUDE() + "°");
+
+        if (cr.getLATITUDE().trim().equals(new String("")))
             ((TextView)findViewById(R.id.detail_activity_latitudine)).setText("n.d.");
+        else
+            ((TextView)findViewById(R.id.detail_activity_latitudine)).setText(cr.getLATITUDE() + "°");
     }
 
 
