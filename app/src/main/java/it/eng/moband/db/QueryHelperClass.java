@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import it.eng.moband.MainActivity;
+import it.eng.moband.db.CptContract;
+import it.eng.moband.exceptions.NullObjectException;
 
 /**
  * Created by mamurrone on 08/09/2016.
@@ -20,23 +22,19 @@ public class QueryHelperClass {
     }
 
 
-    private void logCurrentRow(Cursor c) {
-        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti._ID)));
-        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_SECT)));
-        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_YEAR)));
-        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_MONTH)));
-        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_DAY)));
-        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_HOUR)));
-        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_MINUTE)));
-        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA)));
-        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_MAX)));
-    }
 
+    public Cursor getRecordById(long id) throws NullObjectException {
+        if (mDB == null)
+            throw new NullObjectException("DB null - it's impossible to get some data.");
 
-    public Cursor getRecordById(long id) {
+        if (!mDB.isOpen())
+            mDB.isOpen();
+
         String[] ids = new String[1];
         ids[0] = "" + id;
         //TODO controllare che il DB sia aperto
+
+
         Cursor c = mDB.query(CptContract.CatalogoParametricoTerremoti.TABLE_NAME, null, "_ID = ?", ids, null, null, null);
 
         if (c != null)
@@ -48,8 +46,8 @@ public class QueryHelperClass {
     }
 
     public Cursor getAllRecords() {
-        //contatutto
-        String[] columns = new String[]{"_id",
+        String[] columns = new String[]{
+                CptContract.CatalogoParametricoTerremoti._ID,
                 CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_SECT,
                 CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_REFNAME,
                 CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_YEAR,
@@ -74,6 +72,10 @@ public class QueryHelperClass {
         return data;
     }
 
+
+
+
+
     public long debugAllRecords() {
         Cursor c = mDB.query(CptContract.CatalogoParametricoTerremoti.TABLE_NAME, null, null, null, null, null, null);
         long rowCount = 0;
@@ -89,4 +91,18 @@ public class QueryHelperClass {
         }
         return rowCount;
     }
+
+
+    private void logCurrentRow(Cursor c) {
+        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti._ID)));
+        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_SECT)));
+        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_YEAR)));
+        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_MONTH)));
+        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_DAY)));
+        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_HOUR)));
+        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_MINUTE)));
+        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_EPICENTRAL_AREA)));
+        Log.d("cpt", c.getString(c.getColumnIndex(CptContract.CatalogoParametricoTerremoti.COLUMN_NAME_INTENSITY_MAX)));
+    }
+
 }
