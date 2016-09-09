@@ -126,12 +126,10 @@ public class DetailRecordActivity extends AppCompatActivity {
     private long getIdFromIntent(Intent intent)
     {
         long id = -1;
-        try
-        {
+        try {
             id = (long)intent.getExtras().get(CptConstants.ITEM_ID);
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             id = -1;
         }
 
